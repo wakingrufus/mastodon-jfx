@@ -1,0 +1,6 @@
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<HBox xmlns:fx="http://javafx.com/fxml" stylesheets="@css/feeds.css" styleClass="feedsWrapper">
+    <ListView fx:id="feeds"></ListView>
+</HBox>

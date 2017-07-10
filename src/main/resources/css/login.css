@@ -1,0 +1,9 @@
+.loginWrapper {
+    -fx-background-color: #061018;
+}
+
+.formLabel {
+    -fx-min-width: 10em;
+    -fx-max-width: 50%;
+    -fx-text-fill: #FFFFFF;
+}

@@ -1,0 +1,33 @@
+.accountListContainer {
+    -fx-min-height: 100%;
+    -fx-background-color: #222222;
+}
+
+.accountList {
+    -fx-min-height: 100%;
+    -fx-background-color: #122e43;
+}
+
+.bottomButton {
+    -fx-alignment: bottom-center;
+    -fx-max-height: 2em;
+    -fx-min-width: 100%;
+}
+
+.topButton {
+    -fx-alignment: top-center;
+    -fx-max-height: 2em;
+    -fx-min-width: 100%;
+}
+
+.indexed-cell {
+    -fx-text-fill: #FFFFFF;
+}
+
+.indexed-cell:even {
+    -fx-background-color: #173953;
+}
+
+.indexed-cell:odd {
+    -fx-background-color: #0e2333;
+}

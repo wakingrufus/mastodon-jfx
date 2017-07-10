@@ -1,0 +1,14 @@
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<VBox xmlns:fx="http://javafx.com/fxml" stylesheets="@css/settings.css" styleClass="accountListContainer">
+    <HBox styleClass="topButton">
+        <Button text="Home"></Button>
+    </HBox>
+    <ListView styleClass="accountList" fx:id="listView"></ListView>
+    <HBox styleClass="bottomButton">
+        <Button fx:id="newIdButton" text="New Identity" onAction="#handleNewIdButtonAction">
+        </Button>
+    </HBox>
+</VBox>
