@@ -1,0 +1,29 @@
+language: java
+
+jdk:
+    - oraclejdk8
+
+env:
+  global:
+    - CD_BUCKET=mastodon-jfx-release CD_KEY=latest.zip
+    - secure: s7iNmuXRB7q1WK99TvV5VU4ABbQrLGAw8J33B6qR6+1Nc9+bqCCMBoyxOV3ZN9wnIZPKzhFKEkJYO7mINAATb/if1UourS/eQHenKG7VZtAdWNM98BcLv8JeztrK3vkkNXHKK3mQpWJEJjexLqWk03pILOiLgFDI5hHkBuR5+HDamIVDAKkFhmNPVFwLaYZHlON7744nuG7/OBi1GCxFm+9t/Nya9Lkf50MnSH24gxTc1usDwarLZSbrBX07GUnFNdjhYZdWwRthtzjcUdxpP/9reC+hZe008+AfBVXKFyjNUuJ6ihpUUY9muilLq6q96KFBztHK63inyjPf3TKglQ==
+
+# Create directories for test and coverage reports
+before_build:
+  - mkdir -p shippable/testresults
+  - mkdir -p shippable/codecoverage
+  - rm -rf build
+
+build:
+  ci:
+    - gradle wrapper
+    - ./gradlew clean test jacocoTestReport build
+  on_failure:
+    - cp build/test-results/test/*.xml shippable/testresults
+  on_success:
+    - export TAG_NAME=`git describe --exact-match --tags HEAD`
+    - if [ "$TAG_NAME" != "" ]; then export RELEASE_KEY="$TAG_NAME.zip"; fi
+    - cp build/test-results/test/*.xml shippable/testresults
+    - cp build/reports/jacoco/test/jacocoTestReport.xml shippable/codecoverage
+    - aws s3 cp $SHIPPABLE_BUILD_DIR/build/distributions/mastodon-jfx.zip s3://$CD_BUCKET/$CD_KEY
+    - if [ "$TAG_NAME" != "" ]; then aws s3 cp $SHIPPABLE_BUILD_DIR/build/distributions/mastodon-jfx.zip s3://$CD_BUCKET/$RELEASE_KEY; fi

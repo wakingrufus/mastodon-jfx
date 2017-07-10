@@ -48,7 +48,7 @@ dependencies {
 
 jfx {
     // minimal requirement for jfxJar-task
-    mainClass = 'com.github.wakingrufus.mastodon.Main'
+    mainClassName = 'com.github.wakingrufus.mastodon.Main'
 
     // minimal requirement for jfxNative-task
     vendor = 'wakingrufus'
