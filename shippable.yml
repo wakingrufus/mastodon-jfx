@@ -16,6 +16,7 @@ before_build:
 
 build:
   ci:
+    - gradle -v
     - gradle wrapper
     - ./gradlew clean test jacocoTestReport build
   on_failure:
