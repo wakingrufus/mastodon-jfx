@@ -10,6 +10,9 @@ env:
 
 # Create directories for test and coverage reports
 before_build:
+  - sudo apt-get install xvfb
+  - Xvfb :99 &>/dev/null &
+  - export DISPLAY=:99
   - mkdir -p shippable/testresults
   - mkdir -p shippable/codecoverage
   - rm -rf build
