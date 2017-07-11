@@ -23,5 +23,5 @@ build:
   on_success:
     - export TAG_NAME=`git describe --exact-match --tags HEAD`
     - if [ "$TAG_NAME" != "" ]; then export RELEASE_KEY="$TAG_NAME.zip"; fi
-    - aws s3 cp $SHIPPABLE_BUILD_DIR/build/distributions/mastodon-jfx.zip s3://$CD_BUCKET/$CD_KEY
-    - if [ "$TAG_NAME" != "" ]; then aws s3 cp $SHIPPABLE_BUILD_DIR/build/distributions/mastodon-jfx.zip s3://$CD_BUCKET/$RELEASE_KEY; fi
+    - aws s3 cp $SHIPPABLE_BUILD_DIR/build/distributions/mastodon-jfx-*.zip s3://$CD_BUCKET/$CD_KEY
+    - if [ "$TAG_NAME" != "" ]; then aws s3 cp $SHIPPABLE_BUILD_DIR/build/distributions/mastodon-jfx-*.zip s3://$CD_BUCKET/$RELEASE_KEY; fi
