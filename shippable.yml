@@ -8,17 +8,14 @@ env:
     - CD_BUCKET=mastodon-jfx-release CD_KEY=latest.zip
     - secure: s7iNmuXRB7q1WK99TvV5VU4ABbQrLGAw8J33B6qR6+1Nc9+bqCCMBoyxOV3ZN9wnIZPKzhFKEkJYO7mINAATb/if1UourS/eQHenKG7VZtAdWNM98BcLv8JeztrK3vkkNXHKK3mQpWJEJjexLqWk03pILOiLgFDI5hHkBuR5+HDamIVDAKkFhmNPVFwLaYZHlON7744nuG7/OBi1GCxFm+9t/Nya9Lkf50MnSH24gxTc1usDwarLZSbrBX07GUnFNdjhYZdWwRthtzjcUdxpP/9reC+hZe008+AfBVXKFyjNUuJ6ihpUUY9muilLq6q96KFBztHK63inyjPf3TKglQ==
 
-# Create directories for test and coverage reports
-before_build:
-  - sudo apt-get install xvfb
-  - Xvfb :99 &>/dev/null &
-  - export DISPLAY=:99
-  - mkdir -p shippable/testresults
-  - mkdir -p shippable/codecoverage
-  - rm -rf build
-
 build:
   ci:
+    - sudo apt-get install xvfb
+    - Xvfb :99 &>/dev/null &
+    - export DISPLAY=:99
+    - mkdir -p shippable/testresults
+    - mkdir -p shippable/codecoverage
+    - rm -rf build
     - gradle -v
     - gradle wrapper
     - ./gradlew clean test jacocoTestReport build
