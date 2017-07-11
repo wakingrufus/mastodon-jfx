@@ -19,12 +19,10 @@ build:
     - gradle -v
     - gradle wrapper
     - ./gradlew clean test jacocoTestReport build
-  on_failure:
     - cp build/test-results/test/*.xml shippable/testresults
+    - cp build/reports/jacoco/ shippable/codecoverage
   on_success:
     - export TAG_NAME=`git describe --exact-match --tags HEAD`
     - if [ "$TAG_NAME" != "" ]; then export RELEASE_KEY="$TAG_NAME.zip"; fi
-    - cp build/test-results/test/*.xml shippable/testresults
-    - cp build/reports/jacoco/ shippable/codecoverage
     - aws s3 cp $SHIPPABLE_BUILD_DIR/build/distributions/mastodon-jfx.zip s3://$CD_BUCKET/$CD_KEY
     - if [ "$TAG_NAME" != "" ]; then aws s3 cp $SHIPPABLE_BUILD_DIR/build/distributions/mastodon-jfx.zip s3://$CD_BUCKET/$RELEASE_KEY; fi
