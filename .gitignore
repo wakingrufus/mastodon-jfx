@@ -4,3 +4,4 @@ gradle/
 gradlew.bat
 gradlew
 .idea/
+shippable/

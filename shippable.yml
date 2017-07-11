@@ -16,11 +16,10 @@ build:
     - mkdir -p shippable/testresults
     - mkdir -p shippable/codecoverage
     - rm -rf build
-    - gradle -v
     - gradle wrapper
     - ./gradlew clean test jacocoTestReport build
     - cp build/test-results/test/*.xml shippable/testresults
-    - cp build/reports/jacoco/ shippable/codecoverage
+    - cp -r build/reports/jacoco/ shippable/codecoverage
   on_success:
     - export TAG_NAME=`git describe --exact-match --tags HEAD`
     - if [ "$TAG_NAME" != "" ]; then export RELEASE_KEY="$TAG_NAME.zip"; fi
