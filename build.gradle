@@ -21,6 +21,8 @@ repositories {
     maven { url 'https://jitpack.io' }
 }
 
+version = "0.1.0"
+
 dependencies {
     // compile files("/usr/share/java/openjfx/lib/packager.jar")
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre8"
@@ -34,7 +36,7 @@ dependencies {
     compile "com.fasterxml.jackson.module:jackson-module-kotlin:2.7.+"
     compile 'com.github.sys1yagi:mastodon4j:1.1.+'
     compile 'io.github.microutils:kotlin-logging:1.4.4'
-   // compile 'com.github.sys1yagi:mastodon4j-rx:0.+'
+  //  compile 'com.github.sys1yagi:mastodon4j-rx:1.1.+'
     compile "org.jetbrains.kotlin:kotlin-reflect"
 
     testCompile "org.jetbrains.kotlin:kotlin-test"
@@ -43,7 +45,7 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
     testCompile "org.testfx:testfx-core:4.0.+"
     testCompile "org.testfx:testfx-junit:4.0.+"
-    testCompile 'com.github.sys1yagi:kmockito:0.1.+'
+    testCompile "com.nhaarman:mockito-kotlin-kt1.1:1.5.0"
 }
 
 jfx {

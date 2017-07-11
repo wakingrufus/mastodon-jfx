@@ -5,8 +5,8 @@ import com.github.wakingrufus.mastodon.feed.FeedQuery
 import com.github.wakingrufus.mastodon.feed.FeedState
 import com.github.wakingrufus.mastodon.feed.TootFeedState
 import com.github.wakingrufus.mastodon.ui.FeedsController
-import com.sys1yagi.kmockito.invoked
-import com.sys1yagi.kmockito.mock
+import com.nhaarman.mockito_kotlin.doReturn
+import com.nhaarman.mockito_kotlin.mock
 import com.sys1yagi.mastodon4j.MastodonClient
 import com.sys1yagi.mastodon4j.api.entity.Account
 import com.sys1yagi.mastodon4j.api.entity.Status
@@ -41,9 +41,9 @@ public class FeedsControllerTest : ApplicationTest() {
 
     @Throws(Exception::class)
     override fun start(stage: Stage) {
-
-        val mastodonClient: MastodonClient = mock()
-     //   mastodonClient.get(String()).invoked().thenReturn(Response.Builder().build())
+        val mastodonClient = mock<MastodonClient> {
+         //   on { get(String()) } doReturn Response.Builder().build()
+        }
         val feedState: TootFeedState = TootFeedState(elements = arrayListOf(FeedElement(FeedQuery.HOME, mastodonClient)))
         val feedStates: ObservableList<FeedState<*>> = FXCollections.observableArrayList()
         feedStates.add(feedState)

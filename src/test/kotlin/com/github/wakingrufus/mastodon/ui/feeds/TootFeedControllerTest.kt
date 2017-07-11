@@ -1,10 +1,9 @@
 package com.github.wakingrufus.mastodon.ui.feeds;
 
-import com.github.wakingrufus.mastodon.feed.FeedDefinition
 import com.github.wakingrufus.mastodon.feed.FeedElement
 import com.github.wakingrufus.mastodon.feed.FeedQuery
 import com.github.wakingrufus.mastodon.feed.TootFeedState
-import com.sys1yagi.kmockito.mock
+import com.nhaarman.mockito_kotlin.mock
 import com.sys1yagi.mastodon4j.MastodonClient
 import com.sys1yagi.mastodon4j.api.entity.Account
 import com.sys1yagi.mastodon4j.api.entity.Status
@@ -36,8 +35,10 @@ public class TootFeedControllerTest : ApplicationTest() {
 
     @Throws(Exception::class)
     override fun start(stage: Stage) {
-        val mastodonClient: MastodonClient = mock()
-        val feedState: TootFeedState = TootFeedState(elements = arrayListOf(FeedElement(FeedQuery.HOME,mastodonClient)))
+        val mastodonClient = mock<MastodonClient> {
+            //   on { get(String()) } doReturn Response.Builder().build()
+        }
+        val feedState: TootFeedState = TootFeedState(elements = arrayListOf(FeedElement(FeedQuery.HOME, mastodonClient)))
 
         val account: Account = Account(displayName = "displayName")
         val status: Status = Status(account = account)
