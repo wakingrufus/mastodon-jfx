@@ -16,6 +16,7 @@ build:
     - export DISPLAY=:99
     - mkdir -p shippable/testresults
     - mkdir -p shippable/codecoverage
+    - mkdir -p shippable/codecoverage/target/site/jacoco
     - rm -rf build
     - gradle wrapper
     - ./gradlew clean test jacocoTestReport build
