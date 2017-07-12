@@ -23,6 +23,7 @@ build:
     - cp build/test-results/test/*.xml shippable/testresults
     - cp build/reports/jacoco/test/jacocoTestReport.xml shippable/codecoverage
     - cp -r build/jacoco/test.exec shippable/codecoverage/target/site/jacoco
+    - cp -r build/classes shippable/codecoverage/target
   on_success:
     - export TAG_NAME=`git describe --exact-match --tags HEAD`
     - if [ "$TAG_NAME" != "" ]; then export RELEASE_KEY="$TAG_NAME.zip"; fi
