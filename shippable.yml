@@ -6,7 +6,8 @@ jdk:
 env:
   global:
     - CD_BUCKET=mastodon-jfx-release CD_KEY=latest.zip
-    - secure: s7iNmuXRB7q1WK99TvV5VU4ABbQrLGAw8J33B6qR6+1Nc9+bqCCMBoyxOV3ZN9wnIZPKzhFKEkJYO7mINAATb/if1UourS/eQHenKG7VZtAdWNM98BcLv8JeztrK3vkkNXHKK3mQpWJEJjexLqWk03pILOiLgFDI5hHkBuR5+HDamIVDAKkFhmNPVFwLaYZHlON7744nuG7/OBi1GCxFm+9t/Nya9Lkf50MnSH24gxTc1usDwarLZSbrBX07GUnFNdjhYZdWwRthtzjcUdxpP/9reC+hZe008+AfBVXKFyjNUuJ6ihpUUY9muilLq6q96KFBztHK63inyjPf3TKglQ==
+    - secure: z9IGw3NJvhMCVNNDR66STZlpHp2gd62cAfJn/oUe0/ozvD1qcPyl3+c+Ypp06Hv3mFIzJUjaeWbTqs5uCuCGAVjB5shHwhFgO42oW1oH9zEBF1bEbSAoYTrVg+fp9Xw1lHkrStaUh2Sg3zF36Lv591BPCtJqaPPCFSkLLi5sI6c400BoD1vrHgKozd8ysutkmEMoebBwmeoBJj78j4NxINWXjpFp8a3ek0b/GPdsDT6A0kNQtxa1zo7k+sD0JtVvgxwRtkWB6JIWiWTiz7TicHWXhQyES3c7kxXQqdCRMU6Koa1lCOvj9/PFgtlO+7YFyJIFlOMarVgIp/QL6h8Erw==
+    - secure: dkmc+cm3MJORJsUfg8nceylVgD9Cd6cyiQ+4Rf1SJw3+mLorvBInMlVF96tKbGhPTgAGO4jJZGHoTrC9ygYJF5/t+Z5W2oikt4/FKJtlTj3KIZY7ggpoeJ1u9Oc2OLN1EfuxbByKQNw2yQLbtha5cjufDr39Lgdud8qQv0neNVms9cKELaGB4mcFf6A1PXPniJmcENH+UrlS6EdTgO5TzjzB8jDyyNHoBAmwo4rXNAEZfolJyoULkELGGvzaPMbppR6qse7+VTSlzNh5hORoHPpeImjeNQ7LsC88Cdmn+PXt/ksHhAxUHzIYmZ67SSTI2MuUxvRPNGbyr6fD9neVjg==
 
 build:
   ci:
@@ -19,7 +20,8 @@ build:
     - gradle wrapper
     - ./gradlew clean test jacocoTestReport build
     - cp build/test-results/test/*.xml shippable/testresults
-    - cp -r build/reports/jacoco/ shippable/codecoverage
+    - cp build/reports/jacoco/test/jacocoTestReport.xml shippable/codecoverage
+    - cp -r build/jacoco/test.exec shippable/codecoverage/target/site/jacoco
   on_success:
     - export TAG_NAME=`git describe --exact-match --tags HEAD`
     - if [ "$TAG_NAME" != "" ]; then export RELEASE_KEY="$TAG_NAME.zip"; fi
