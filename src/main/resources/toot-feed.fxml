@@ -1,7 +1,7 @@
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ListView?>
-<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.VBox?>
-<VBox xmlns:fx="http://javafx.com/fxml">
-    <ListView fx:id="toots" ></ListView>
-</VBox>
+<ScrollPane xmlns:fx="http://javafx.com/fxml" fx:id="feedScroller" styleClass="feedWrapper" stylesheets="@css/feed.css">
+    <content>
+        <VBox fx:id="tootFeedWrapper"  />
+    </content>
+</ScrollPane>

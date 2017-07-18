@@ -3,3 +3,7 @@
     -fx-min-width: 100%;
 }
 
+.feedsWrapper .feedWrapper {
+    -fx-min-width: 33%;
+}
+

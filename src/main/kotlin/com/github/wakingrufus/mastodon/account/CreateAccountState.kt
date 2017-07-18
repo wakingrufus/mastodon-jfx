@@ -13,7 +13,7 @@ fun createAccountState(client: MastodonClient): AccountState {
         val newAccountState = AccountState(account, client)
         return newAccountState
     } catch (e: Mastodon4jRequestException) {
-        logger.error("error fetching account: " + e.message)
-        throw e
+        logger.error("error fetching account: " + e.message, e)
+        throw Exception("error fetching account: " + e.message)
     }
 }

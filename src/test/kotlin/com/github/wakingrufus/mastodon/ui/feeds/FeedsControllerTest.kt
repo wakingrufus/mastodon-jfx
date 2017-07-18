@@ -45,7 +45,7 @@ public class FeedsControllerTest : ApplicationTest() {
          //   on { get(String()) } doReturn Response.Builder().build()
         }
         val feedState: TootFeedState = TootFeedState(elements = arrayListOf(FeedElement(FeedQuery.HOME, mastodonClient)))
-        val feedStates: ObservableList<FeedState<*>> = FXCollections.observableArrayList()
+        val feedStates: ObservableList<FeedState<Status>> = FXCollections.observableArrayList()
         feedStates.add(feedState)
         val account: Account = Account(displayName = "displayName")
         val status: Status = Status(account = account)

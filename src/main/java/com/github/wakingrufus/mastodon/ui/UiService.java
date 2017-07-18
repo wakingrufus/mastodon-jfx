@@ -19,8 +19,11 @@ import com.github.wakingrufus.mastodon.events.ViewAccountEvent;
 import com.github.wakingrufus.mastodon.feed.FeedState;
 import com.github.wakingrufus.mastodon.feed.FetchFeedKt;
 import com.github.wakingrufus.mastodon.feed.GetDefaultFeedsKt;
+import com.github.wakingrufus.mastodon.feed.GetNotificationFeedKt;
 import com.github.wakingrufus.mastodon.ui.settings.SettingsController;
 import com.sys1yagi.mastodon4j.MastodonClient;
+import com.sys1yagi.mastodon4j.api.entity.Notification;
+import com.sys1yagi.mastodon4j.api.entity.Status;
 import com.sys1yagi.mastodon4j.api.entity.auth.AccessToken;
 import com.sys1yagi.mastodon4j.api.entity.auth.AppRegistration;
 import com.sys1yagi.mastodon4j.api.method.Accounts;
@@ -32,7 +35,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import lombok.extern.slf4j.Slf4j;
@@ -44,7 +48,7 @@ public class UiService {
     private final Stage stage;
     private final BorderPane root = new BorderPane();
     private final Config config;
-    VBox conversationBox = new VBox(15);
+    private Pane conversationBox;
     private ClientBuilder clientBuilder;
 
 
@@ -69,12 +73,17 @@ public class UiService {
             log.error("error loading settings pane: " + e.getLocalizedMessage(), e);
         }
 
-        conversationBox = new VBox(15);
+        conversationBox = new StackPane();
+        Pane notificationBox = new StackPane();
+
         root.setStyle("-fx-min-height: 100%;");
         root.setCenter(conversationBox);
         root.setLeft(settingsPane);
+        root.setRight(notificationBox);
 
         final double rootEm = Math.rint(new Text().getLayoutBounds().getHeight());
+        conversationBox.setMinHeight(rootEm * 60);
+        //  conversationBox.setStyle("-fx-min-width: "+(rootEm * 60)+"em;");
         Scene scene = new Scene(root, rootEm * 80, rootEm * 60);
 
         // Set the application icon.
@@ -92,9 +101,13 @@ public class UiService {
 
         root.addEventHandler(ViewAccountEvent.VIEW_ACCOUNT,
                 viewAccountEvent -> {
-                    ObservableList<FeedState<?>> feedsForAccount = GetDefaultFeedsKt.getFeedsForAccount(viewAccountEvent.getAccount().getClient());
-                    ViewAccountFeedsKt.viewAccountFeeds(conversationBox, feedsForAccount);
+                    MastodonClient client = viewAccountEvent.getAccount().getClient();
+                    ObservableList<FeedState<Status>> feedsForAccount = GetDefaultFeedsKt.getFeedsForAccount(client);
                     feedsForAccount.forEach(FetchFeedKt::fetchFeed);
+                    ViewAccountFeedsKt.viewAccountFeeds(conversationBox, feedsForAccount);
+                    FeedState<Notification> notificationFeed = GetNotificationFeedKt.getNotificationFeedForAccount(client);
+                    FetchFeedKt.fetchFeed(notificationFeed);
+                    ViewAccountNotificationsKt.viewAccountNotifications(notificationBox, notificationFeed);
                 });
         root.addEventHandler(NewAccountEvent.NEW_ACCOUNT,
                 newAccountEvent -> {

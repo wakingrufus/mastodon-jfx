@@ -4,6 +4,7 @@
 }
 
 .accountList {
+    -fx-text-fill: #FFFFFF;
     -fx-min-height: 100%;
     -fx-background-color: #122e43;
 }

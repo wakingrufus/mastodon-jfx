@@ -1,0 +1,20 @@
+.tootWrapper {
+    -fx-background-color: #061018;
+    -fx-min-width: 100%;
+    -fx-text-fill: white;
+    -fx-padding: 1em;
+    -fx-alignment: top-left;
+}
+.tootAuthorName {
+    -fx-background-color: #061018;
+    -fx-text-fill: white;
+    -fx-font-size: 1.5em;
+}
+.tootAuthorAccount {
+    -fx-text-fill: #2b6a9b;
+    -fx-padding: 1em;
+}
+
+.tootContent {
+    -fx-min-height: 8em;
+}
