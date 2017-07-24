@@ -9,7 +9,7 @@ import mu.KotlinLogging
 import java.io.IOException
 
 private val logger = KotlinLogging.logger {}
-fun viewAccountFeeds(parent: Pane, feedStates: ObservableList<FeedState<Status>>) {
+fun viewAccountFeeds(parent: Pane, feedStates: ObservableList<ObservableList<Status>>) {
     parent.children.clear()
     val feedsController = FeedsController(feedStates)
     val fxmlLoader = FXMLLoader(object : Any() {}.javaClass.getResource("/feeds.fxml"))

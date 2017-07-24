@@ -15,14 +15,9 @@ import com.github.wakingrufus.mastodon.events.NewAccountEvent;
 import com.github.wakingrufus.mastodon.events.OAuthStartEvent;
 import com.github.wakingrufus.mastodon.events.OAuthTokenEvent;
 import com.github.wakingrufus.mastodon.events.ServerConnectEvent;
-import com.github.wakingrufus.mastodon.events.ViewAccountEvent;
-import com.github.wakingrufus.mastodon.feed.FeedState;
-import com.github.wakingrufus.mastodon.feed.FetchFeedKt;
-import com.github.wakingrufus.mastodon.feed.GetDefaultFeedsKt;
-import com.github.wakingrufus.mastodon.feed.GetNotificationFeedKt;
+import com.github.wakingrufus.mastodon.events.ViewFeedEvent;
 import com.github.wakingrufus.mastodon.ui.settings.SettingsController;
 import com.sys1yagi.mastodon4j.MastodonClient;
-import com.sys1yagi.mastodon4j.api.entity.Notification;
 import com.sys1yagi.mastodon4j.api.entity.Status;
 import com.sys1yagi.mastodon4j.api.entity.auth.AccessToken;
 import com.sys1yagi.mastodon4j.api.entity.auth.AppRegistration;
@@ -64,6 +59,8 @@ public class UiService {
         Parent settingsPane = null;
 
         final ObservableList<AccountState> accountList = FXCollections.observableArrayList();
+        final ObservableList<ObservableList<Status>> feeds = FXCollections.observableArrayList();
+
         SettingsController settingsController = new SettingsController(accountList);
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/settings.fxml"));
@@ -92,23 +89,15 @@ public class UiService {
         stage.setScene(scene);
         stage.show();
 
+        ViewAccountFeedsKt.viewAccountFeeds(conversationBox, feeds);
+
         config.getConfig().getIdentities().forEach(
                 identityAuth -> {
                     MastodonClient client = clientBuilder.createAccountClient(identityAuth.getServer(), identityAuth.getAccessToken());
                     accountList.add(CreateAccountStateKt.createAccountState(client));
                 });
 
-
-        root.addEventHandler(ViewAccountEvent.VIEW_ACCOUNT,
-                viewAccountEvent -> {
-                    MastodonClient client = viewAccountEvent.getAccount().getClient();
-                    ObservableList<FeedState<Status>> feedsForAccount = GetDefaultFeedsKt.getFeedsForAccount(client);
-                    feedsForAccount.forEach(FetchFeedKt::fetchFeed);
-                    ViewAccountFeedsKt.viewAccountFeeds(conversationBox, feedsForAccount);
-                    FeedState<Notification> notificationFeed = GetNotificationFeedKt.getNotificationFeedForAccount(client);
-                    FetchFeedKt.fetchFeed(notificationFeed);
-                    ViewAccountNotificationsKt.viewAccountNotifications(notificationBox, notificationFeed);
-                });
+        root.addEventHandler(ViewFeedEvent.VIEW_FEED, viewFeedEvent -> feeds.add(viewFeedEvent.getFeed()));
         root.addEventHandler(NewAccountEvent.NEW_ACCOUNT,
                 newAccountEvent -> {
                     MastodonClient client = clientBuilder.createAccountClient(newAccountEvent.getServer(), newAccountEvent.getAccessToken());

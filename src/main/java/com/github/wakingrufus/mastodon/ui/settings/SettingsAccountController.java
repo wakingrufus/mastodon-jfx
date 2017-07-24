@@ -2,6 +2,8 @@ package com.github.wakingrufus.mastodon.ui.settings;
 
 
 import com.github.wakingrufus.mastodon.account.AccountState;
+import com.github.wakingrufus.mastodon.events.ViewFeedEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -13,7 +15,11 @@ import lombok.extern.slf4j.Slf4j;
 public class SettingsAccountController {
     private final AccountState accountState;
     @FXML
-    private Button accountButton;
+    private Button homeFeedButton;
+    @FXML
+    private Button publicFeedButton;
+    @FXML
+    private Button federatedFeedButton;
     @FXML
     private Label accountName;
     @FXML
@@ -40,9 +46,15 @@ public class SettingsAccountController {
             if (!accountState.getAccount().getAvatar().isEmpty()) {
                 log.info("avatar: " + accountState.getAccount().getAvatar());
                 avatarView.setImage(new Image(accountState.getAccount().getAvatar()));
-                accountButton.setGraphic(avatarView);
             }
-            accountButton.setOnAction(actionEvent -> log.info(actionEvent.toString()));
+            homeFeedButton.setOnAction(actionEvent -> Event.fireEvent(actionEvent.getTarget(),
+                    new ViewFeedEvent(actionEvent.getSource(), actionEvent.getTarget(), accountState, accountState.getHomeFeed())));
+            publicFeedButton.setOnAction(actionEvent -> Event.fireEvent(actionEvent.getTarget(),
+                    new ViewFeedEvent(actionEvent.getSource(), actionEvent.getTarget(), accountState, accountState.getPublicFeed())));
+            federatedFeedButton.setOnAction(actionEvent -> Event.fireEvent(actionEvent.getTarget(),
+                    new ViewFeedEvent(actionEvent.getSource(), actionEvent.getTarget(), accountState, accountState.getFederatedFeed())));
+
+
         }
     }
 

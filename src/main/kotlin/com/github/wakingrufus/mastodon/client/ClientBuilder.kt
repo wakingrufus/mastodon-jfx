@@ -11,7 +11,7 @@ class ClientBuilder() {
     fun createAccountClient(instance: String, accessToken: String): MastodonClient {
         val httpClientBuilder = OkHttpClient.Builder().addInterceptor(OkHttpLogger())
         var builder = MastodonClient.Builder(instance, httpClientBuilder, Gson())
-        builder = builder.accessToken(accessToken)
+        builder = builder.accessToken(accessToken).useStreamingApi()
         return builder.build()
     }
 

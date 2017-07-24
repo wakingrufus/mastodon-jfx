@@ -6,15 +6,14 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <HBox xmlns:fx="http://javafx.com/fxml">
-    <Button fx:id="accountButton">
-        <graphic>
-            <ImageView fx:id="avatarView" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
-                <image>
-                    <Image fx:id="avatar" url="@/images/avatar-default.png"/>
-                </image>
-            </ImageView>
-        </graphic>
-    </Button>
+    <Button fx:id="homeFeedButton" text="Home"/>
+    <Button fx:id="publicFeedButton" text="Public"/>
+    <Button fx:id="federatedFeedButton" text="Federated"/>
+    <ImageView fx:id="avatarView" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+        <image>
+            <Image fx:id="avatar" url="@/images/avatar-default.png"/>
+        </image>
+    </ImageView>
     <VBox>
         <Label fx:id="accountName">
             <font>

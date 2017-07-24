@@ -1,17 +1,17 @@
 package com.github.wakingrufus.mastodon.ui
 
-import com.github.wakingrufus.mastodon.feed.FeedState
-import com.github.wakingrufus.mastodon.feed.FeedType
 import com.sys1yagi.mastodon4j.api.entity.Status
+import javafx.collections.ListChangeListener
 import javafx.collections.ObservableList
 import javafx.fxml.FXML
 import javafx.fxml.FXMLLoader
+import javafx.scene.control.ScrollPane
 import javafx.scene.layout.HBox
+import javafx.scene.layout.Pane
 import mu.KLogging
-import java.io.IOException
 
 
-class FeedsController(private val feedStates: ObservableList<FeedState<Status>>) {
+class FeedsController(private val feedStates: ObservableList<ObservableList<Status>>) {
     companion object : KLogging()
 
     @FXML
@@ -19,19 +19,22 @@ class FeedsController(private val feedStates: ObservableList<FeedState<Status>>)
 
     fun initialize() {
         feedStates.forEach {
-            if (it.feedType == FeedType.TOOT) {
-                val tootController = TootFeedController(it.items)
-                val fxmlLoader = FXMLLoader(javaClass.getResource("/toot-feed.fxml"))
-                fxmlLoader.setController(tootController)
-                try {
-                    feedsWrapper?.children?.add(fxmlLoader.load())
-                } catch (e: IOException) {
-                    e.printStackTrace()
-                }
+            feedsWrapper?.children?.add(buildTootFeedPanel(it))
 
-            } else {
-                logger.warn("invalid feedtype: " + it.feedType.name)
+        }
+
+        feedStates.addListener { change: ListChangeListener.Change<out ObservableList<Status>>? ->
+            while (change?.next()!!) {
+                change.addedSubList?.forEach { feedsWrapper?.children?.add(element = buildTootFeedPanel(it), index = 0) }
             }
         }
+    }
+
+    fun buildTootFeedPanel(feedState: ObservableList<Status>): ScrollPane {
+        val tootController = TootFeedController(feedState)
+        val fxmlLoader = FXMLLoader(javaClass.getResource("/toot-feed.fxml"))
+        fxmlLoader.setController(tootController)
+        return fxmlLoader.load()
+
     }
 }
