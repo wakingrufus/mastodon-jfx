@@ -1,4 +1,4 @@
-package com.github.wakingrufus.mastodon.ui.settings;
+package com.github.wakingrufus.mastodon.ui;
 
 import com.github.wakingrufus.mastodon.account.AccountState
 import com.google.gson.Gson

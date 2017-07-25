@@ -2,10 +2,11 @@ package com.github.wakingrufus.mastodon.ui
 
 import com.github.wakingrufus.mastodon.ui.feeds.TootController
 import com.sys1yagi.mastodon4j.api.entity.Status
+import javafx.collections.ListChangeListener
 import javafx.collections.ObservableList
 import javafx.fxml.FXML
 import javafx.fxml.FXMLLoader
-import javafx.scene.layout.HBox
+import javafx.scene.layout.StackPane
 import javafx.scene.layout.VBox
 import mu.KLogging
 import java.io.IOException
@@ -18,14 +19,24 @@ class TootFeedController(private val statuses: ObservableList<Status>) {
 
     fun initialize() {
         statuses.forEach {
-            val tootController = TootController(it)
-            val fxmlLoader = FXMLLoader(javaClass.getResource("/toot.fxml"))
-            fxmlLoader.setController(tootController)
             try {
-                tootFeedWrapper?.children?.add(fxmlLoader.load())
+                tootFeedWrapper?.children?.add(buildTootPanel(it))
             } catch (e: IOException) {
                 logger.error("error loading feed view: " + e.localizedMessage, e)
             }
         }
+
+        statuses.addListener { change: ListChangeListener.Change<out Status>? ->
+            while (change?.next()!!) {
+                change.addedSubList?.forEach { tootFeedWrapper?.children?.add(element = buildTootPanel(it), index = 0) }
+            }
+        }
+    }
+
+    private fun buildTootPanel(toot: Status): VBox {
+        val tootController = TootController(toot)
+        val fxmlLoader = FXMLLoader(javaClass.getResource("/toot.fxml"))
+        fxmlLoader.setController(tootController)
+        return fxmlLoader.load()
     }
 }

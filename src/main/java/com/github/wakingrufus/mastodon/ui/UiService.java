@@ -16,7 +16,6 @@ import com.github.wakingrufus.mastodon.events.OAuthStartEvent;
 import com.github.wakingrufus.mastodon.events.OAuthTokenEvent;
 import com.github.wakingrufus.mastodon.events.ServerConnectEvent;
 import com.github.wakingrufus.mastodon.events.ViewFeedEvent;
-import com.github.wakingrufus.mastodon.ui.settings.SettingsController;
 import com.sys1yagi.mastodon4j.MastodonClient;
 import com.sys1yagi.mastodon4j.api.entity.Status;
 import com.sys1yagi.mastodon4j.api.entity.auth.AccessToken;
@@ -25,8 +24,6 @@ import com.sys1yagi.mastodon4j.api.method.Accounts;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
@@ -35,8 +32,6 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import lombok.extern.slf4j.Slf4j;
-
-import java.io.IOException;
 
 @Slf4j
 public class UiService {
@@ -56,19 +51,11 @@ public class UiService {
 
     public void init() {
 
-        Parent settingsPane = null;
-
         final ObservableList<AccountState> accountList = FXCollections.observableArrayList();
         final ObservableList<ObservableList<Status>> feeds = FXCollections.observableArrayList();
 
-        SettingsController settingsController = new SettingsController(accountList);
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/settings.fxml"));
-            fxmlLoader.setController(settingsController);
-            settingsPane = fxmlLoader.load();
-        } catch (IOException e) {
-            log.error("error loading settings pane: " + e.getLocalizedMessage(), e);
-        }
+        Pane settingsPane = new StackPane();
+        ViewSettingsKt.viewSettings(settingsPane, accountList);
 
         conversationBox = new StackPane();
         Pane notificationBox = new StackPane();
@@ -80,7 +67,6 @@ public class UiService {
 
         final double rootEm = Math.rint(new Text().getLayoutBounds().getHeight());
         conversationBox.setMinHeight(rootEm * 60);
-        //  conversationBox.setStyle("-fx-min-width: "+(rootEm * 60)+"em;");
         Scene scene = new Scene(root, rootEm * 80, rootEm * 60);
 
         // Set the application icon.

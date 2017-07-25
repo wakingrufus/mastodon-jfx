@@ -35,6 +35,5 @@ class FeedsController(private val feedStates: ObservableList<ObservableList<Stat
         val fxmlLoader = FXMLLoader(javaClass.getResource("/toot-feed.fxml"))
         fxmlLoader.setController(tootController)
         return fxmlLoader.load()
-
     }
 }
