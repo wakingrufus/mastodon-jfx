@@ -1,6 +1,7 @@
 .accountListContainer {
     -fx-min-height: 100%;
     -fx-background-color: #222222;
+    -fx-padding: 1px;
 }
 
 .accountList {
@@ -21,14 +22,7 @@
     -fx-min-width: 100%;
 }
 
-.indexed-cell {
-    -fx-text-fill: #FFFFFF;
-}
-
-.indexed-cell:even {
-    -fx-background-color: #173953;
-}
-
-.indexed-cell:odd {
-    -fx-background-color: #0e2333;
+.serverName{
+    -fx-text-fill: white;
+    -fx-font-size: 1em;
 }

@@ -1,6 +1,5 @@
 package com.github.wakingrufus.mastodon.ui
 
-import com.github.wakingrufus.mastodon.feed.FeedState
 import com.sys1yagi.mastodon4j.api.entity.Status
 import javafx.collections.ObservableList
 import javafx.fxml.FXMLLoader

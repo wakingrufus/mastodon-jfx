@@ -1,16 +1,16 @@
 package com.github.wakingrufus.mastodon.ui
 
-import com.github.wakingrufus.mastodon.feed.FeedState
 import com.sys1yagi.mastodon4j.api.entity.Notification
+import javafx.collections.ObservableList
 import javafx.fxml.FXMLLoader
 import javafx.scene.layout.Pane
 import mu.KotlinLogging
 import java.io.IOException
 
 private val logger = KotlinLogging.logger {}
-fun viewAccountNotifications(parent: Pane, notificationFeedState: FeedState<Notification>) {
+fun viewAccountNotifications(parent: Pane, notifications: ObservableList<Notification>) {
     parent.children.clear()
-    val controller = NotificationFeedController(notificationFeedState.items)
+    val controller = NotificationFeedController(notifications)
     val fxmlLoader = FXMLLoader(object : Any() {}.javaClass.getResource("/notification-feed.fxml"))
     fxmlLoader.setController(controller)
     try {

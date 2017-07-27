@@ -1,0 +1,41 @@
+.notificationFeedWrapper {
+    -fx-background-color: linear-gradient(#328BDB 0%, #207BCF 25%, #1973C9 75%, #0A65BF 100%);
+    -fx-text-fill: white;
+    -fx-padding: 1px;
+}
+
+.notificationWrapper {
+    -fx-background-color: #061018;
+    -fx-min-width: 100%;
+    -fx-text-fill: white;
+    -fx-padding: 1em;
+    -fx-alignment: top-left;
+}
+
+.notificationWrapper .displayName {
+    -fx-background-color: #061018;
+    -fx-text-fill: white;
+    -fx-font-size: 1.5em;
+}
+.notificationWrapper .notificationTime {
+    -fx-text-fill: #2b6a9b;
+    -fx-padding: 1em;
+}
+
+.notificationWrapper .message {
+    -fx-padding: 1em;
+    -fx-text-fill: white;
+}
+
+.feedTitleWrapper {
+    -fx-background-color: #061018;
+    -fx-text-fill: white;
+    -fx-min-width: 100%;
+}
+
+.feedTitle {
+    -fx-background-color: #061018;
+    -fx-text-fill: white;
+    -fx-font-size: 2em;
+    -fx-font-weight: bold;
+}

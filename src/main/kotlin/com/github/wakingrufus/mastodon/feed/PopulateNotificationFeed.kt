@@ -12,14 +12,13 @@ import javafx.collections.ObservableList
 import mu.KotlinLogging
 
 private val logger = KotlinLogging.logger {}
-fun populateTootFeed(feed: ObservableList<Status>,
-                     fetcher: (Range) -> MastodonRequest<Pageable<Status>>,
-                     listener: (Handler) -> Shutdownable): Shutdownable {
-    logger.debug("fetching Home feed")
+fun populateNotificationFeed(feed: ObservableList<Notification>,
+                             fetcher: (Range) -> MastodonRequest<Pageable<Notification>>,
+                             listener: (Handler) -> Shutdownable): Shutdownable {
     try {
         val statusPageable = fetcher.invoke(Range()).execute()
         val statuses = statusPageable.part
-     //   logger.info(statuses.size.toString() + " statuses found")
+        logger.info(statuses.size.toString() + " notifications found")
         feed += statuses
 
     } catch (e: Mastodon4jRequestException) {
@@ -28,11 +27,11 @@ fun populateTootFeed(feed: ObservableList<Status>,
 
     val shutdownable = listener.invoke(object : Handler {
         override fun onStatus(status: Status) {
-          //  logger.info { "receiving message: ${status.content}" }
-            feed.add(element = status, index = 0)
         }
 
         override fun onNotification(notification: Notification) {
+            logger.info { "receiving notification: ${notification.type}" }
+            feed.add(element = notification, index = 0)
         }
 
         override fun onDelete(id: Long) {/* no op */

@@ -12,5 +12,5 @@ data class AccountState(val account: Account,
                         val homeFeed: ObservableList<Status> = FXCollections.observableArrayList<Status>(),
                         val publicFeed: ObservableList<Status> = FXCollections.observableArrayList<Status>(),
                         val federatedFeed: ObservableList<Status> = FXCollections.observableArrayList<Status>(),
-                        val notification: ObservableList<Notification> = FXCollections.observableArrayList<Notification>()) {
+                        val notificationFeed: ObservableList<Notification> = FXCollections.observableArrayList<Notification>()) {
 }

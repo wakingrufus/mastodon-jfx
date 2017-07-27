@@ -16,6 +16,7 @@ import com.github.wakingrufus.mastodon.events.OAuthStartEvent;
 import com.github.wakingrufus.mastodon.events.OAuthTokenEvent;
 import com.github.wakingrufus.mastodon.events.ServerConnectEvent;
 import com.github.wakingrufus.mastodon.events.ViewFeedEvent;
+import com.github.wakingrufus.mastodon.events.ViewNotificationsEvent;
 import com.sys1yagi.mastodon4j.MastodonClient;
 import com.sys1yagi.mastodon4j.api.entity.Status;
 import com.sys1yagi.mastodon4j.api.entity.auth.AccessToken;
@@ -46,7 +47,6 @@ public class UiService {
         this.stage = stage;
         this.clientBuilder = clientBuilder;
         this.config = config;
-
     }
 
     public void init() {
@@ -54,18 +54,21 @@ public class UiService {
         final ObservableList<AccountState> accountList = FXCollections.observableArrayList();
         final ObservableList<ObservableList<Status>> feeds = FXCollections.observableArrayList();
 
+        final double rootEm = Math.rint(new Text().getLayoutBounds().getHeight());
+
         Pane settingsPane = new StackPane();
         ViewSettingsKt.viewSettings(settingsPane, accountList);
 
         conversationBox = new StackPane();
         Pane notificationBox = new StackPane();
+        notificationBox.setMinWidth(rootEm * 10);
 
         root.setStyle("-fx-min-height: 100%;");
         root.setCenter(conversationBox);
         root.setLeft(settingsPane);
         root.setRight(notificationBox);
 
-        final double rootEm = Math.rint(new Text().getLayoutBounds().getHeight());
+
         conversationBox.setMinHeight(rootEm * 60);
         Scene scene = new Scene(root, rootEm * 80, rootEm * 60);
 
@@ -84,6 +87,9 @@ public class UiService {
                 });
 
         root.addEventHandler(ViewFeedEvent.VIEW_FEED, viewFeedEvent -> feeds.add(viewFeedEvent.getFeed()));
+        root.addEventHandler(ViewNotificationsEvent.VIEW_NOTIFICATIONS,
+                event -> ViewAccountNotificationsKt.viewAccountNotifications(notificationBox, event.getFeed()));
+
         root.addEventHandler(NewAccountEvent.NEW_ACCOUNT,
                 newAccountEvent -> {
                     MastodonClient client = clientBuilder.createAccountClient(newAccountEvent.getServer(), newAccountEvent.getAccessToken());
@@ -95,6 +101,7 @@ public class UiService {
                             newAccountEvent.getClientSecret(),
                             newAccountEvent.getServer());
                     AddAccountToConfigKt.addAccountToConfig(config, accountConfig);
+                    //    ViewAccountFeedsKt.viewAccountFeeds(conversationBox, feeds);
                 });
         // CREATE_ACCOUNT -> get server name -> SERVER_CONNECT -> OAUTH_START -> got to oauth page and get token -> OAUTH_TOKEN
         root.addEventHandler(CreateAccountEvent.CREATE_ACCOUNT,

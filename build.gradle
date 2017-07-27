@@ -18,6 +18,7 @@ plugins {
 apply plugin: 'javafx-gradle-plugin'
 repositories {
     mavenCentral()
+    maven { url 'https://dl.bintray.com/kotlin/kotlinx'}
     maven { url 'https://jitpack.io' }
 }
 
@@ -26,6 +27,7 @@ version = "0.1.0"
 dependencies {
     // compile files("/usr/share/java/openjfx/lib/packager.jar")
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre8"
+    compile 'org.jetbrains.kotlinx:kotlinx-coroutines-core:0.17'
     compile 'org.projectlombok:lombok:1.16.+'
     compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.+'
     compile group: 'org.slf4j', name: 'slf4j-log4j12', version: '1.7.+'

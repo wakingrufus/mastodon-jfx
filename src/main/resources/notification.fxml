@@ -1,6 +1,12 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.VBox?>
-<VBox>
-    <Label fx:id="displayName"></Label>
-    <Label fx:id="type"></Label>
+<?import javafx.scene.layout.HBox?>
+<VBox xmlns:fx="http://javafx.com/fxml" styleClass="notificationWrapper">
+    <HBox>
+        <Label fx:id="displayName" styleClass="displayName"></Label>
+        <Label fx:id="message" styleClass="message"></Label>
+    </HBox>
+    <HBox fx:id="tootView"></HBox>
+    <HBox fx:id="accountView"></HBox>
+    <Label fx:id="notificationTime" styleClass="notificationTime"/>
 </VBox>

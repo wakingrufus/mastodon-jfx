@@ -3,9 +3,6 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <VBox xmlns:fx="http://javafx.com/fxml" stylesheets="@css/toot.css" styleClass="tootWrapper">
-    <HBox>
-        <Label fx:id="displayName" styleClass="tootAuthorName"/>
-        <Label fx:id="fullName" styleClass="tootAuthorAccount"/>
-    </HBox>
+    <HBox fx:id="accountView"/>
     <FittedWebView fx:id="content" styleClass="tootContent"/>
 </VBox>
