@@ -24,11 +24,7 @@ public class TootFeedControllerTest : ApplicationTest() {
     @Throws(IOException::class)
     fun test() {
         logger.info("TootFeedControllerTest")
-        verifyThat<Node>("#displayName", NodeMatchers.hasText("displayName"))
-        verifyThat<Node>("#displayName", NodeMatchers.hasText("displayName"))
-
-        //   Node displayName = v.lookup("#displayName");
-        //  assertEquals("displayName", displayName.getAccessibleText());
+        verifyThat<Node>("#tootFeedWrapper", NodeMatchers.isVisible())
     }
 
     @Throws(Exception::class)

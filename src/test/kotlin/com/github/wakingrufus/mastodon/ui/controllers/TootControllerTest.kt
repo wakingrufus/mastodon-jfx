@@ -1,10 +1,11 @@
-import com.github.wakingrufus.mastodon.ui.feeds.TootController
+import com.github.wakingrufus.mastodon.ui.controllers.TootController
 import com.sys1yagi.mastodon4j.api.entity.Account
 import com.sys1yagi.mastodon4j.api.entity.Status
 import javafx.fxml.FXMLLoader
 import javafx.scene.Node
 import javafx.scene.Parent
 import javafx.scene.Scene
+import javafx.scene.layout.HBox
 import javafx.stage.Stage
 import mu.KLogging
 import org.junit.Test
@@ -20,17 +21,16 @@ class TootControllerTest : ApplicationTest() {
     @Throws(IOException::class)
     fun test() {
         logger.info("TootControllerTest")
-        verifyThat<Node>("#displayName", NodeMatchers.hasText("displayName"))
-
-        //   Node displayName = v.lookup("#displayName");
-        //  assertEquals("displayName", displayName.getAccessibleText());
+        verifyThat<Node>("#accountView", NodeMatchers.isVisible())
     }
 
     @Throws(Exception::class)
     override fun start(stage: Stage) {
         val account: Account = Account(displayName = "displayName")
         val status: Status = Status(account = account)
-        val tootController = TootController(status)
+        val tootController = TootController(
+                status = status,
+                viewAccountFunction = { hbox, account -> hbox.children.add(HBox()) })
         val fxmlLoader = FXMLLoader(javaClass.getResource("/toot.fxml"))
         fxmlLoader.setController(tootController)
         val load: Parent = fxmlLoader.load()

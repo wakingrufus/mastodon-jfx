@@ -1,6 +1,6 @@
 package com.github.wakingrufus.mastodon.ui
 
-import com.github.wakingrufus.mastodon.ui.feeds.TootController
+import com.github.wakingrufus.mastodon.ui.controllers.TootController
 import com.sys1yagi.mastodon4j.api.entity.Status
 import javafx.application.Platform
 import javafx.collections.ListChangeListener

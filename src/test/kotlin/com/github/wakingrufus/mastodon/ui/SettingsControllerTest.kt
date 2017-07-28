@@ -26,11 +26,8 @@ public class SettingsControllerTest : ApplicationTest() {
     @Throws(IOException::class)
     fun test() {
         logger.info("FeedsControllerTest")
-        verifyThat<Node>("#accountName", NodeMatchers.hasText("displayName"))
-        verifyThat<Node>("#serverName", NodeMatchers.hasText("@instanceName"))
-
-        //   Node displayName = v.lookup("#displayName");
-        //  assertEquals("displayName", displayName.getAccessibleText());
+        verifyThat<Node>("#accountListWrapper", NodeMatchers.isVisible())
+        verifyThat<Node>("#newIdButton", NodeMatchers.hasText("New Identity"))
     }
 
     @Throws(Exception::class)

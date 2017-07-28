@@ -19,7 +19,6 @@ import org.testfx.framework.junit.ApplicationTest
 import org.testfx.matcher.base.NodeMatchers
 import java.io.IOException
 
-
 public class FeedsControllerTest : ApplicationTest() {
     companion object : KLogging()
 
@@ -27,10 +26,7 @@ public class FeedsControllerTest : ApplicationTest() {
     @Throws(IOException::class)
     fun test() {
         logger.info("FeedsControllerTest")
-        verifyThat<Node>("#displayName", NodeMatchers.hasText("displayName"))
-
-        //   Node displayName = v.lookup("#displayName");
-        //  assertEquals("displayName", displayName.getAccessibleText());
+        verifyThat<Node>("#feedsWrapper", NodeMatchers.isVisible())
     }
 
     @Throws(Exception::class)

@@ -31,7 +31,6 @@ class AccountController(private val account: Account) {
         serverName?.text = sb.toString()
 
         if (!account.avatar.isEmpty()) {
-            logger.info("avatar: " + account.avatar)
             val url = URL(account.avatar)
             val httpcon : HttpURLConnection = url.openConnection() as HttpURLConnection
             httpcon.addRequestProperty("User-Agent", "Mozilla/4.0")
