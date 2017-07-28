@@ -1,5 +1,6 @@
 package com.github.wakingrufus.mastodon.ui
 
+import com.github.wakingrufus.mastodon.ui.controllers.AccountController
 import com.sys1yagi.mastodon4j.api.entity.Account
 import javafx.fxml.FXMLLoader
 import javafx.scene.layout.Pane

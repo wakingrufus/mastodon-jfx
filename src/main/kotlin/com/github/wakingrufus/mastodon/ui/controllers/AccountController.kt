@@ -1,10 +1,12 @@
-package com.github.wakingrufus.mastodon.ui
+package com.github.wakingrufus.mastodon.ui.controllers
 
 import com.sys1yagi.mastodon4j.api.entity.Account
 import javafx.fxml.FXML
 import javafx.scene.control.Label
 import javafx.scene.image.Image
 import javafx.scene.image.ImageView
+import kotlinx.coroutines.experimental.CommonPool
+import kotlinx.coroutines.experimental.launch
 import mu.KLogging
 import java.net.HttpURLConnection
 import java.net.URL
@@ -31,10 +33,12 @@ class AccountController(private val account: Account) {
         serverName?.text = sb.toString()
 
         if (!account.avatar.isEmpty()) {
-            val url = URL(account.avatar)
-            val httpcon : HttpURLConnection = url.openConnection() as HttpURLConnection
-            httpcon.addRequestProperty("User-Agent", "Mozilla/4.0")
-            avatarView?.image = Image(httpcon.inputStream)
+            launch(CommonPool) {
+                val url = URL(account.avatar)
+                val httpcon: HttpURLConnection = url.openConnection() as HttpURLConnection
+                httpcon.addRequestProperty("User-Agent", "Mozilla/4.0")
+                avatarView?.image = Image(httpcon.inputStream)
+            }
         }
     }
 }

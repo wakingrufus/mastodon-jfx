@@ -22,7 +22,7 @@ repositories {
     maven { url 'https://jitpack.io' }
 }
 
-version = "0.1.0"
+version = "0.1.1"
 
 dependencies {
     // compile files("/usr/share/java/openjfx/lib/packager.jar")
@@ -38,7 +38,6 @@ dependencies {
     compile "com.fasterxml.jackson.module:jackson-module-kotlin:2.7.+"
     compile 'com.github.sys1yagi:mastodon4j:1.1.+'
     compile 'io.github.microutils:kotlin-logging:1.4.4'
-  //  compile 'com.github.sys1yagi:mastodon4j-rx:1.1.+'
     compile "org.jetbrains.kotlin:kotlin-reflect"
 
     testCompile "org.jetbrains.kotlin:kotlin-test"

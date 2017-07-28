@@ -19,7 +19,6 @@ fun populateTootFeed(feed: ObservableList<Status>,
     try {
         val statusPageable = fetcher.invoke(Range()).execute()
         val statuses = statusPageable.part
-     //   logger.info(statuses.size.toString() + " statuses found")
         feed += statuses
 
     } catch (e: Mastodon4jRequestException) {
@@ -28,7 +27,6 @@ fun populateTootFeed(feed: ObservableList<Status>,
 
     val shutdownable = listener.invoke(object : Handler {
         override fun onStatus(status: Status) {
-          //  logger.info { "receiving message: ${status.content}" }
             feed.add(element = status, index = 0)
         }
 
