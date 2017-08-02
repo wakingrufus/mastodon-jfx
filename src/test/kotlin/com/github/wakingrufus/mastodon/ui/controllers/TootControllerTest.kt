@@ -1,3 +1,5 @@
+import com.github.wakingrufus.mastodon.ui.Controller
+import com.github.wakingrufus.mastodon.ui.Viewer
 import com.github.wakingrufus.mastodon.ui.controllers.TootController
 import com.sys1yagi.mastodon4j.api.entity.Account
 import com.sys1yagi.mastodon4j.api.entity.Status
@@ -28,9 +30,7 @@ class TootControllerTest : ApplicationTest() {
     override fun start(stage: Stage) {
         val account: Account = Account(displayName = "displayName")
         val status: Status = Status(account = account)
-        val tootController = TootController(
-                status = status,
-                viewAccountFunction = { hbox, account -> hbox.children.add(HBox()) })
+        val tootController = TootController(status = status)
         val fxmlLoader = FXMLLoader(javaClass.getResource("/toot.fxml"))
         fxmlLoader.setController(tootController)
         val load: Parent = fxmlLoader.load()

@@ -1,14 +1,18 @@
 package com.github.wakingrufus.mastodon.ui.controllers
 
+import com.github.wakingrufus.mastodon.ui.Controller
 import com.github.wakingrufus.mastodon.ui.FittedWebView
-import com.github.wakingrufus.mastodon.ui.viewAccount
+import com.github.wakingrufus.mastodon.ui.Viewer
+import com.github.wakingrufus.mastodon.ui.ViewerMode
 import com.sys1yagi.mastodon4j.api.entity.Account
 import com.sys1yagi.mastodon4j.api.entity.Status
 import javafx.fxml.FXML
 import javafx.scene.layout.HBox
 
 class TootController(private val status: Status,
-                     private val viewAccountFunction: (HBox, Account) -> Unit = ::viewAccount) {
+                     private val accountViewer: Viewer<Account> = Viewer(
+                             controller = { item -> AccountController(item) },
+                             template = "/account.fxml")) : Controller<Status> {
 
     @FXML
     internal var accountView: HBox? = null
@@ -16,8 +20,8 @@ class TootController(private val status: Status,
     internal var content: FittedWebView? = null
 
     @FXML
-    fun initialize() {
-        viewAccountFunction(accountView!!, status.account!!)
+    override fun initialize() {
+        accountViewer.view(parent = accountView!!, item = status.account!!, mode = ViewerMode.APPEND)
         content!!.setContent(status.content)
         content!!.setHtmlStylesheetLocation(javaClass.getResource("/css/toot-content.css").toString())
     }

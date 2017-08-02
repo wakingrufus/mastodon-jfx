@@ -1,5 +1,6 @@
 package com.github.wakingrufus.mastodon.ui;
 
+import com.github.wakingrufus.mastodon.ui.controllers.TootFeedController
 import com.sys1yagi.mastodon4j.api.entity.Account
 import com.sys1yagi.mastodon4j.api.entity.Status
 import javafx.collections.FXCollections

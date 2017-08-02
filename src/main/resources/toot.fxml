@@ -2,7 +2,9 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Button?>
 <VBox xmlns:fx="http://javafx.com/fxml" stylesheets="@css/toot.css" styleClass="tootWrapper">
     <HBox fx:id="accountView"/>
     <FittedWebView fx:id="content" styleClass="tootContent"/>
+    <HBox fx:id="tootActions"><Button styleClass="actionButton"><text>☆</text></Button></HBox>
 </VBox>

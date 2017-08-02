@@ -23,7 +23,7 @@
 }
 
 .notificationWrapper .message {
-    -fx-padding: 1em;
+    -fx-font-size: 1.4em;
     -fx-text-fill: white;
 }
 

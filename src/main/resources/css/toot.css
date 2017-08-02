@@ -5,11 +5,13 @@
     -fx-padding: 1em;
     -fx-alignment: top-left;
 }
+
 .tootAuthorName {
     -fx-background-color: #061018;
     -fx-text-fill: white;
     -fx-font-size: 1.5em;
 }
+
 .tootAuthorAccount {
     -fx-text-fill: #2b6a9b;
     -fx-padding: 1em;
@@ -17,4 +19,13 @@
 
 .tootContent {
     -fx-min-height: 8em;
+}
+
+.actionButton {
+    -fx-background-color: #061018;
+    -fx-text-fill: #2b6a9b;
+    -fx-background-radius: 30;
+    -fx-background-insets: 0;
+    -fx-font-size: 2em;
+    -fx-cursor: hand;
 }

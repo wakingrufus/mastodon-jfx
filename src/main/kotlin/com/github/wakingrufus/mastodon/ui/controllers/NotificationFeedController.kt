@@ -1,24 +1,25 @@
-package com.github.wakingrufus.mastodon.ui
+package com.github.wakingrufus.mastodon.ui.controllers
 
-import com.github.wakingrufus.mastodon.ui.feeds.NotificationController
+import com.github.wakingrufus.mastodon.ui.Controller
 import com.sys1yagi.mastodon4j.api.entity.Notification
 import javafx.application.Platform
 import javafx.collections.ListChangeListener
 import javafx.collections.ObservableList
 import javafx.fxml.FXML
 import javafx.fxml.FXMLLoader
-import javafx.scene.layout.HBox
 import javafx.scene.layout.VBox
 import mu.KLogging
 import java.io.IOException
 
-class NotificationFeedController(private val statuses: ObservableList<Notification>) {
+class NotificationFeedController(private val statuses: ObservableList<Notification>)
+    : Controller<ObservableList<Notification>> {
     companion object : KLogging()
 
     @FXML
     internal var notifications: VBox? = null
 
-    fun initialize() {
+    @FXML
+    override fun initialize() {
         statuses.forEach {
             try {
                 notifications?.children?.add(buildNotificationPanel(it))

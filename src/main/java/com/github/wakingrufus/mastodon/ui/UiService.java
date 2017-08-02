@@ -17,6 +17,8 @@ import com.github.wakingrufus.mastodon.events.OAuthTokenEvent;
 import com.github.wakingrufus.mastodon.events.ServerConnectEvent;
 import com.github.wakingrufus.mastodon.events.ViewFeedEvent;
 import com.github.wakingrufus.mastodon.events.ViewNotificationsEvent;
+import com.github.wakingrufus.mastodon.ui.controllers.SettingsAccountController;
+import com.github.wakingrufus.mastodon.ui.controllers.SettingsController;
 import com.sys1yagi.mastodon4j.MastodonClient;
 import com.sys1yagi.mastodon4j.api.entity.Status;
 import com.sys1yagi.mastodon4j.api.entity.auth.AccessToken;
