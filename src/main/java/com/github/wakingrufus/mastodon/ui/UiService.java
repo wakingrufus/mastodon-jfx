@@ -17,8 +17,6 @@ import com.github.wakingrufus.mastodon.events.OAuthTokenEvent;
 import com.github.wakingrufus.mastodon.events.ServerConnectEvent;
 import com.github.wakingrufus.mastodon.events.ViewFeedEvent;
 import com.github.wakingrufus.mastodon.events.ViewNotificationsEvent;
-import com.github.wakingrufus.mastodon.ui.controllers.SettingsAccountController;
-import com.github.wakingrufus.mastodon.ui.controllers.SettingsController;
 import com.sys1yagi.mastodon4j.MastodonClient;
 import com.sys1yagi.mastodon4j.api.entity.Status;
 import com.sys1yagi.mastodon4j.api.entity.auth.AccessToken;
@@ -27,6 +25,7 @@ import com.sys1yagi.mastodon4j.api.method.Accounts;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
@@ -36,10 +35,12 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import lombok.extern.slf4j.Slf4j;
 
+import java.io.IOException;
+
 @Slf4j
 public class UiService {
     private final Stage stage;
-    private final BorderPane root = new BorderPane();
+    //  private final BorderPane root = new BorderPane();
     private final Config config;
     private Pane conversationBox;
     private ClientBuilder clientBuilder;
@@ -64,8 +65,14 @@ public class UiService {
         conversationBox = new StackPane();
         Pane notificationBox = new StackPane();
         notificationBox.setMinWidth(rootEm * 10);
-
-        root.setStyle("-fx-min-height: 100%;");
+        FXMLLoader fxmlLoader = new FXMLLoader(UiService.class.getResource("/main.fxml"));
+        BorderPane root = null;
+        try {
+            root = fxmlLoader.load();
+        } catch (IOException e) {
+            log.error("error loading main", e);
+        }
+        //    root.setStyle("-fx-min-height: 100%;");
         root.setCenter(conversationBox);
         root.setLeft(settingsPane);
         root.setRight(notificationBox);
@@ -103,7 +110,6 @@ public class UiService {
                             newAccountEvent.getClientSecret(),
                             newAccountEvent.getServer());
                     AddAccountToConfigKt.addAccountToConfig(config, accountConfig);
-                    //    ViewAccountFeedsKt.viewAccountFeeds(conversationBox, feeds);
                 });
         // CREATE_ACCOUNT -> get server name -> SERVER_CONNECT -> OAUTH_START -> got to oauth page and get token -> OAUTH_TOKEN
         root.addEventHandler(CreateAccountEvent.CREATE_ACCOUNT,

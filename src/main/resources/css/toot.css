@@ -20,7 +20,7 @@
 .tootContent {
     -fx-min-height: 8em;
 }
-
+/*
 .actionButton {
     -fx-background-color: #061018;
     -fx-text-fill: #2b6a9b;
@@ -29,3 +29,4 @@
     -fx-font-size: 2em;
     -fx-cursor: hand;
 }
+*/

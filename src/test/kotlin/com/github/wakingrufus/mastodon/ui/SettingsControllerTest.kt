@@ -28,7 +28,7 @@ public class SettingsControllerTest : ApplicationTest() {
     fun test() {
         logger.info("FeedsControllerTest")
         verifyThat<Node>("#accountListWrapper", NodeMatchers.isVisible())
-        verifyThat<Node>("#newIdButton", NodeMatchers.hasText("New Identity"))
+        verifyThat<Node>("#newIdButton", NodeMatchers.hasText("Add"))
     }
 
     @Throws(Exception::class)

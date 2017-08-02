@@ -4,7 +4,7 @@
 <VBox xmlns:fx="http://javafx.com/fxml" stylesheets="@css/settings.css" styleClass="accountListContainer">
     <VBox styleClass="accountList" fx:id="accountListWrapper"/>
     <HBox styleClass="bottomButton">
-        <Button fx:id="newIdButton" text="New Identity" onAction="#handleNewIdButtonAction">
+        <Button fx:id="newIdButton" text="Add" onAction="#handleNewIdButtonAction">
         </Button>
     </HBox>
 </VBox>

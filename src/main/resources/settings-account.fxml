@@ -4,15 +4,13 @@
 <?import javafx.scene.layout.VBox?>
 <HBox xmlns:fx="http://javafx.com/fxml" styleClass="accountContainer">
     <VBox>
-        <Button fx:id="homeFeedButton" text="Home"/>
-        <Button fx:id="notificationFeedButton" text="Notifications"/>
-    </VBox>
-    <VBox>
-        <Button fx:id="publicFeedButton" text="Public"/>
-        <Button fx:id="federatedFeedButton" text="Federated"/>
-    </VBox>
-    <VBox>
         <Label fx:id="serverName" styleClass="serverName"/>
         <HBox fx:id="accountView"/>
+        <HBox>
+            <Button fx:id="homeFeedButton" text="⌂" accessibleText="Home"/>
+            <Button fx:id="publicFeedButton" text="👥" accessibleText="Public"/>
+            <Button fx:id="federatedFeedButton" text="🌎" accessibleText="Federated"/>
+            <Button fx:id="notificationFeedButton" text="🔔" accessibleText="Notifications"/>
+        </HBox>
     </VBox>
 </HBox>
