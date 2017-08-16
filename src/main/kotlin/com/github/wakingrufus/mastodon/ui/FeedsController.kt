@@ -1,5 +1,6 @@
 package com.github.wakingrufus.mastodon.ui
 
+import com.github.wakingrufus.mastodon.account.AccountState
 import com.github.wakingrufus.mastodon.ui.controllers.TootFeedController
 import com.sys1yagi.mastodon4j.api.entity.Status
 import javafx.collections.ListChangeListener
@@ -11,7 +12,8 @@ import javafx.scene.layout.HBox
 import mu.KLogging
 
 
-class FeedsController(private val feedStates: ObservableList<ObservableList<Status>>)
+class FeedsController(private val feedStates: ObservableList<ObservableList<Status>>,
+                      private val accountPrompter: () -> AccountState?)
     : Controller<ObservableList<ObservableList<Status>>> {
     companion object : KLogging()
 
@@ -33,7 +35,7 @@ class FeedsController(private val feedStates: ObservableList<ObservableList<Stat
     }
 
     fun buildTootFeedPanel(feedState: ObservableList<Status>): ScrollPane {
-        val tootController = TootFeedController(feedState)
+        val tootController = TootFeedController(statuses = feedState, accountPrompter = accountPrompter)
         val fxmlLoader = FXMLLoader(javaClass.getResource("/toot-feed.fxml"))
         fxmlLoader.setController(tootController)
         return fxmlLoader.load()

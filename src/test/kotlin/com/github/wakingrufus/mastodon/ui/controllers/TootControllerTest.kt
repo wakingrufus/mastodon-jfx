@@ -1,13 +1,12 @@
-import com.github.wakingrufus.mastodon.ui.Controller
-import com.github.wakingrufus.mastodon.ui.Viewer
+import com.github.wakingrufus.mastodon.account.AccountState
 import com.github.wakingrufus.mastodon.ui.controllers.TootController
+import com.nhaarman.mockito_kotlin.mock
 import com.sys1yagi.mastodon4j.api.entity.Account
 import com.sys1yagi.mastodon4j.api.entity.Status
 import javafx.fxml.FXMLLoader
 import javafx.scene.Node
 import javafx.scene.Parent
 import javafx.scene.Scene
-import javafx.scene.layout.HBox
 import javafx.stage.Stage
 import mu.KLogging
 import org.junit.Test
@@ -30,7 +29,9 @@ class TootControllerTest : ApplicationTest() {
     override fun start(stage: Stage) {
         val account: Account = Account(displayName = "displayName")
         val status: Status = Status(account = account)
-        val tootController = TootController(status = status)
+        val tootController = TootController(
+                status = status,
+                accountPrompter = { AccountState(account = account, client = mock()) })
         val fxmlLoader = FXMLLoader(javaClass.getResource("/toot.fxml"))
         fxmlLoader.setController(tootController)
         val load: Parent = fxmlLoader.load()

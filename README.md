@@ -6,15 +6,15 @@ Java FX client for Mastodon
 
 Latest build: [Download](https://s3-us-west-2.amazonaws.com/mastodon-jfx-release/latest.zip)
 
-###Implemented features:
+### Implemented features:
 - Log in to multiple accounts
 - View Home, public, and federated feeds (with realtime updates)
 - view notifications
+- boost toots
 
-###Not yet implemented:
+### Not yet implemented:
 - post a toot
 - favorite toots
-- boost toots
 - view account
 - view #tag feed
 - scroll back history

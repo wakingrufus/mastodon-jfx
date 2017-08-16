@@ -1,5 +1,6 @@
 package com.github.wakingrufus.mastodon.ui.controllers
 
+import com.github.wakingrufus.mastodon.account.AccountState
 import com.github.wakingrufus.mastodon.ui.Controller
 import com.sys1yagi.mastodon4j.api.entity.Notification
 import javafx.application.Platform
@@ -11,7 +12,8 @@ import javafx.scene.layout.VBox
 import mu.KLogging
 import java.io.IOException
 
-class NotificationFeedController(private val statuses: ObservableList<Notification>)
+class NotificationFeedController(private val statuses: ObservableList<Notification>,
+                                 private val accountPrompter: () -> AccountState?)
     : Controller<ObservableList<Notification>> {
     companion object : KLogging()
 
@@ -39,7 +41,10 @@ class NotificationFeedController(private val statuses: ObservableList<Notificati
     }
 
     private fun buildNotificationPanel(notification: Notification): VBox {
-        val tootController = NotificationController(notification)
+        val tootController = NotificationController(
+                notification = notification,
+                accountPrompter = accountPrompter
+        )
         val fxmlLoader = FXMLLoader(javaClass.getResource("/notification.fxml"))
         fxmlLoader.setController(tootController)
         return fxmlLoader.load()

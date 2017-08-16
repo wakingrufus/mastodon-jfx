@@ -1,5 +1,6 @@
 package com.github.wakingrufus.mastodon.ui.controllers
 
+import com.github.wakingrufus.mastodon.account.AccountState
 import com.github.wakingrufus.mastodon.ui.Viewer
 import com.github.wakingrufus.mastodon.ui.ViewerMode
 import com.sys1yagi.mastodon4j.api.entity.Status
@@ -12,8 +13,13 @@ import mu.KLogging
 import java.io.IOException
 
 class TootFeedController(private val statuses: ObservableList<Status>,
+                         private val accountPrompter: () -> AccountState?,
                          private val statusViewer: Viewer<Status> = Viewer(
-                                 controller = { item -> TootController(item) },
+                                 controller = { item ->
+                                     TootController(
+                                             accountPrompter = accountPrompter,
+                                             status = item)
+                                 },
                                  template = "/toot.fxml")) {
     companion object : KLogging()
 

@@ -1,5 +1,6 @@
 package com.github.wakingrufus.mastodon.ui;
 
+import com.github.wakingrufus.mastodon.EventHandlersKt;
 import com.github.wakingrufus.mastodon.account.AccountConfig;
 import com.github.wakingrufus.mastodon.account.AccountState;
 import com.github.wakingrufus.mastodon.account.AddAccountToConfigKt;
@@ -87,17 +88,18 @@ public class UiService {
         stage.setScene(scene);
         stage.show();
 
-        ViewAccountFeedsKt.viewAccountFeeds(conversationBox, feeds);
+        ViewAccountFeedsKt.viewAccountFeeds(conversationBox, feeds, accountList);
 
         config.getConfig().getIdentities().forEach(
                 identityAuth -> {
                     MastodonClient client = clientBuilder.createAccountClient(identityAuth.getServer(), identityAuth.getAccessToken());
                     accountList.add(CreateAccountStateKt.createAccountState(client));
                 });
+        EventHandlersKt.attachEventHandlers(root);
 
         root.addEventHandler(ViewFeedEvent.VIEW_FEED, viewFeedEvent -> feeds.add(viewFeedEvent.getFeed()));
         root.addEventHandler(ViewNotificationsEvent.VIEW_NOTIFICATIONS,
-                event -> ViewAccountNotificationsKt.viewAccountNotifications(notificationBox, event.getFeed()));
+                event -> ViewAccountNotificationsKt.viewAccountNotifications(notificationBox, event.getFeed(), accountList));
 
         root.addEventHandler(NewAccountEvent.NEW_ACCOUNT,
                 newAccountEvent -> {
