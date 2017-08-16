@@ -13,4 +13,7 @@ data class AccountState(val account: Account,
                         val publicFeed: ObservableList<Status> = FXCollections.observableArrayList<Status>(),
                         val federatedFeed: ObservableList<Status> = FXCollections.observableArrayList<Status>(),
                         val notificationFeed: ObservableList<Notification> = FXCollections.observableArrayList<Notification>()) {
+    override fun toString(): String {
+        return account.displayName + client.getInstanceName()
+    }
 }

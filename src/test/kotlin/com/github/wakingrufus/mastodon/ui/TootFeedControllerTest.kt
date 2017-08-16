@@ -1,6 +1,8 @@
 package com.github.wakingrufus.mastodon.ui;
 
+import com.github.wakingrufus.mastodon.account.AccountState
 import com.github.wakingrufus.mastodon.ui.controllers.TootFeedController
+import com.nhaarman.mockito_kotlin.mock
 import com.sys1yagi.mastodon4j.api.entity.Account
 import com.sys1yagi.mastodon4j.api.entity.Status
 import javafx.collections.FXCollections
@@ -17,7 +19,6 @@ import org.testfx.framework.junit.ApplicationTest
 import org.testfx.matcher.base.NodeMatchers
 import java.io.IOException
 
-
 public class TootFeedControllerTest : ApplicationTest() {
     companion object : KLogging()
 
@@ -33,7 +34,9 @@ public class TootFeedControllerTest : ApplicationTest() {
         val account: Account = Account(displayName = "displayName")
         val status: Status = Status(account = account)
         val toots: ObservableList<Status> = FXCollections.observableArrayList(status)
-        val tootController = TootFeedController(toots)
+        val tootController = TootFeedController(
+                statuses = toots,
+                accountPrompter = { AccountState(account = account, client = mock()) })
         val fxmlLoader = FXMLLoader(javaClass.getResource("/toot-feed.fxml"))
         fxmlLoader.setController(tootController)
         val load: Parent = fxmlLoader.load()

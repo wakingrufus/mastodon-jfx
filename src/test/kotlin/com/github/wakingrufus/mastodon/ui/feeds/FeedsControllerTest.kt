@@ -1,5 +1,6 @@
 package com.github.wakingrufus.mastodon.ui.feeds;
 
+import com.github.wakingrufus.mastodon.account.AccountState
 import com.github.wakingrufus.mastodon.ui.FeedsController
 import com.nhaarman.mockito_kotlin.mock
 import com.sys1yagi.mastodon4j.MastodonClient
@@ -39,7 +40,9 @@ public class FeedsControllerTest : ApplicationTest() {
         val feedState: ObservableList<Status> = FXCollections.observableArrayList(status)
         val feedStates: ObservableList<ObservableList<Status>> = FXCollections.observableArrayList()
         feedStates.add(feedState)
-        val tootController = FeedsController(feedStates)
+        val tootController = FeedsController(
+                feedStates = feedStates,
+                accountPrompter = { AccountState(account = account, client = mastodonClient) })
         val fxmlLoader = FXMLLoader(javaClass.getResource("/feeds.fxml"))
         fxmlLoader.setController(tootController)
         val load: Parent = fxmlLoader.load()
