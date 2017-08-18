@@ -1,4 +1,4 @@
-package com.github.wakingrufus.mastodon.ui.feeds;
+package com.github.wakingrufus.mastodon.ui.feeds
 
 import com.github.wakingrufus.mastodon.account.AccountState
 import com.github.wakingrufus.mastodon.ui.FeedsController
