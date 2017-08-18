@@ -28,5 +28,7 @@ build:
     - export TAG_NAME=`git describe --exact-match --tags HEAD`
     - export BRANCH_NAME=`git rev-parse --abbrev-ref HEAD`
     - if [ "$TAG_NAME" != "" ]; then export RELEASE_KEY="$TAG_NAME.zip"; fi
+    - if [ "$TAG_NAME" != "" ]; then export RELEASE_KEY_DEB="$TAG_NAME.deb"; fi
     - if [ "$BRANCH_NAME" = "master" ]; then aws s3 cp $SHIPPABLE_BUILD_DIR/build/distributions/mastodon-jfx-*.zip s3://$CD_BUCKET/$CD_KEY; fi
     - if [ "$TAG_NAME" != "" ]; then aws s3 cp $SHIPPABLE_BUILD_DIR/build/distributions/mastodon-jfx-*.zip s3://$CD_BUCKET/$RELEASE_KEY; fi
+    - if [ "$TAG_NAME" != "" ]; then aws s3 cp $SHIPPABLE_BUILD_DIR/build/jfx/native/mastodon-jfx-*.deb s3://$CD_BUCKET/$RELEASE_KEY_DEB; fi

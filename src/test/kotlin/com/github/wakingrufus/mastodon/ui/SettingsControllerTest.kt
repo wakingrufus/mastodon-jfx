@@ -1,4 +1,4 @@
-package com.github.wakingrufus.mastodon.ui;
+package com.github.wakingrufus.mastodon.ui
 
 import com.github.wakingrufus.mastodon.account.AccountState
 import com.github.wakingrufus.mastodon.ui.controllers.SettingsController

@@ -4,7 +4,7 @@ Java FX client for Mastodon
 [![Run Status](https://api.shippable.com/projects/5963fce801ed240700ba5431/badge?branch=master)](https://app.shippable.com/github/wakingrufus/mastodon-jfx)
 [![Coverage Badge](https://api.shippable.com/projects/5963fce801ed240700ba5431/coverageBadge?branch=master)](https://app.shippable.com/github/wakingrufus/mastodon-jfx)
 
-Latest build: [Download](https://s3-us-west-2.amazonaws.com/mastodon-jfx-release/latest.zip)
+Download mastodon-jfx [here](https://github.com/wakingrufus/mastodon-jfx/wiki/Download)
 
 ### Implemented features:
 - Log in to multiple accounts
