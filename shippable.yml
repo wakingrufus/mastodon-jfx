@@ -19,7 +19,7 @@ build:
     - mkdir -p shippable/codecoverage/target/site/jacoco
     - rm -rf build
     - gradle wrapper
-    - ./gradlew clean test jacocoTestReport build
+    - ./gradlew clean build
     - cp build/test-results/test/*.xml shippable/testresults
     - cp build/reports/jacoco/test/jacocoTestReport.xml shippable/codecoverage
     - cp -r build/jacoco/test.exec shippable/codecoverage/target/site/jacoco
