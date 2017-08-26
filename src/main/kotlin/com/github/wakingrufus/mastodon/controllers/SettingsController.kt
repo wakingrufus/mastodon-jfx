@@ -1,4 +1,4 @@
-package com.github.wakingrufus.mastodon.ui.controllers
+package com.github.wakingrufus.mastodon.controllers
 
 import com.github.wakingrufus.mastodon.account.AccountState
 import com.github.wakingrufus.mastodon.events.CreateAccountEvent

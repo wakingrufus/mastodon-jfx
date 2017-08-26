@@ -1,5 +1,5 @@
 import com.github.wakingrufus.mastodon.account.AccountState
-import com.github.wakingrufus.mastodon.ui.controllers.TootController
+import com.github.wakingrufus.mastodon.controllers.TootController
 import com.nhaarman.mockito_kotlin.mock
 import com.sys1yagi.mastodon4j.api.entity.Account
 import com.sys1yagi.mastodon4j.api.entity.Status

@@ -1,4 +1,4 @@
-package com.github.wakingrufus.mastodon.ui.controllers
+package com.github.wakingrufus.mastodon.controllers
 
 import com.github.wakingrufus.mastodon.ui.Controller
 import com.sys1yagi.mastodon4j.api.entity.Account
