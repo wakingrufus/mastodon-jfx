@@ -1,7 +1,7 @@
 package com.github.wakingrufus.mastodon.ui
 
 import com.github.wakingrufus.mastodon.account.AccountState
-import com.github.wakingrufus.mastodon.ui.controllers.SettingsController
+import com.github.wakingrufus.mastodon.controllers.SettingsController
 import javafx.collections.ObservableList
 import javafx.scene.layout.Pane
 import mu.KotlinLogging

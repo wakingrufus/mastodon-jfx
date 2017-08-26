@@ -1,4 +1,4 @@
-package com.github.wakingrufus.mastodon.ui.controllers
+package com.github.wakingrufus.mastodon.controllers
 
 import com.github.wakingrufus.mastodon.events.ServerConnectEvent
 import com.github.wakingrufus.mastodon.ui.Controller

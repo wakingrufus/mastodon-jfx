@@ -1,7 +1,7 @@
 package com.github.wakingrufus.mastodon.ui
 
 import com.github.wakingrufus.mastodon.account.AccountState
-import com.github.wakingrufus.mastodon.ui.controllers.TootFeedController
+import com.github.wakingrufus.mastodon.controllers.TootFeedController
 import com.sys1yagi.mastodon4j.api.entity.Status
 import javafx.collections.ListChangeListener
 import javafx.collections.ObservableList

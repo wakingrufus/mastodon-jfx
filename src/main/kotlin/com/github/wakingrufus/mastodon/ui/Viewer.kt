@@ -8,7 +8,7 @@ import java.io.IOException
 
 class Viewer<T>(private val controller: (item: T) -> Controller<T>, private val template: String) {
     companion object : KLogging()
-    fun view(parent: Pane, item: T, mode: ViewerMode = ViewerMode.APPEND) {
+    fun view(parent: Pane, item: T, mode: ViewerMode = ViewerMode.APPEND) : Pane{
         if (mode == ViewerMode.REPLACE) {
             parent.children.clear()
         }
@@ -24,5 +24,6 @@ class Viewer<T>(private val controller: (item: T) -> Controller<T>, private val 
         } catch (e: IOException) {
             logger.error("error loading account pane: " + e.localizedMessage, e)
         }
+        return parent
     }
 }

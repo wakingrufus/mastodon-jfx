@@ -1,6 +1,5 @@
 package com.github.wakingrufus.mastodon;
 
-import com.github.wakingrufus.mastodon.client.ClientBuilder;
 import com.github.wakingrufus.mastodon.config.Config;
 import com.github.wakingrufus.mastodon.ui.UiService;
 import javafx.stage.Stage;
@@ -14,7 +13,7 @@ public class IntegrationTest extends ApplicationTest {
     @Override
     public void start(Stage stage) {
         Config config = Mockito.mock(Config.class);
-        UiService uiService = new UiService(stage, new ClientBuilder(), config);
+        UiService uiService = new UiService(stage, config);
     }
 
     @Test
