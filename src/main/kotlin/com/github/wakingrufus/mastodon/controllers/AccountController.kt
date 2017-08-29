@@ -1,6 +1,5 @@
 package com.github.wakingrufus.mastodon.controllers
 
-import com.github.wakingrufus.mastodon.ui.Controller
 import com.sys1yagi.mastodon4j.api.entity.Account
 import javafx.fxml.FXML
 import javafx.scene.control.Label
@@ -12,7 +11,7 @@ import mu.KLogging
 import java.net.HttpURLConnection
 import java.net.URL
 
-class AccountController(private val account: Account) : Controller<Account> {
+class AccountController(private val account: Account, private val server: String? = null) : Controller<Account> {
     companion object : KLogging()
 
     @FXML
@@ -26,15 +25,14 @@ class AccountController(private val account: Account) : Controller<Account> {
 
     @FXML
     override fun initialize() {
-        accountName?.text = account.displayName
-        var sb = StringBuilder()
-        sb = sb.append("@")
-        sb = sb.append(account.acct)
+        accountName?.text = account.userName
 
-        serverName?.text = sb.toString()
+        if (server != null) {
+            serverName?.text = "@" + server
+        }
 
         if (!account.avatar.isEmpty()) {
-            if(!account.avatar.equals("/avatars/original/missing.png")) {
+            if (!account.avatar.equals("/avatars/original/missing.png")) {
                 launch(CommonPool) {
                     val url = URL(account.avatar)
                     val httpcon: HttpURLConnection = url.openConnection() as HttpURLConnection

@@ -4,6 +4,7 @@ import com.github.wakingrufus.mastodon.client.buildNotificationsClient
 import com.github.wakingrufus.mastodon.client.buildPublicClient
 import com.github.wakingrufus.mastodon.client.buildStreamingClient
 import com.github.wakingrufus.mastodon.client.buildTimelinesClient
+import com.github.wakingrufus.mastodon.data.AccountState
 import com.github.wakingrufus.mastodon.feed.populateNotificationFeed
 import com.github.wakingrufus.mastodon.feed.populateTootFeed
 import com.sys1yagi.mastodon4j.MastodonClient
@@ -24,15 +25,15 @@ fun createAccountState(client: MastodonClient): AccountState {
                 client = client)
         launch(CommonPool) {
             val homeShutdownable = populateTootFeed(
-                    feed = newAccountState.homeFeed,
+                    feed = newAccountState.homeFeed.statuses,
                     fetcher = buildTimelinesClient(client)::getHome,
                     listener = streamingClient::user)
             val publicShutdownable = populateTootFeed(
-                    feed = newAccountState.publicFeed,
+                    feed = newAccountState.publicFeed.statuses,
                     fetcher = buildPublicClient(client)::getLocalPublic,
                     listener = streamingClient::localPublic)
             val federatedShutdownable = populateTootFeed(
-                    feed = newAccountState.federatedFeed,
+                    feed = newAccountState.federatedFeed.statuses,
                     fetcher = buildPublicClient(client)::getFederatedPublic,
                     listener = streamingClient::federatedPublic)
             val notificationShutdownable = populateNotificationFeed(

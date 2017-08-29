@@ -1,31 +1,33 @@
 package com.github.wakingrufus.mastodon.controllers
 
-import com.github.wakingrufus.mastodon.account.AccountState
+import com.github.wakingrufus.mastodon.data.AccountState
 import com.github.wakingrufus.mastodon.toot.boostToot
 import com.github.wakingrufus.mastodon.toot.unboostToot
-import com.github.wakingrufus.mastodon.ui.Controller
-import com.github.wakingrufus.mastodon.ui.FittedWebView
 import com.github.wakingrufus.mastodon.ui.Viewer
 import com.github.wakingrufus.mastodon.ui.ViewerMode
+import com.github.wakingrufus.mastodon.ui.parseToot
 import com.sys1yagi.mastodon4j.api.entity.Account
 import com.sys1yagi.mastodon4j.api.entity.Status
 import javafx.fxml.FXML
 import javafx.scene.control.Button
 import javafx.scene.layout.HBox
+import javafx.scene.layout.Pane
+import javafx.scene.layout.VBox
 import mu.KLogging
 
 class TootController(private val status: Status,
                      private val accountViewer: Viewer<Account> = Viewer(
-                             controller = { item -> AccountController(item) },
+                             controller = { item -> AccountController(account = item, server = status.account?.url) },
                              template = "/account.fxml"),
-                     private val accountPrompter: () -> (AccountState?)) : Controller<Status> {
+                     private val accountPrompter: () -> (AccountState?),
+                     private val tootParser: (String) -> (Pane) = ::parseToot) : Controller<Status> {
     companion object : KLogging()
 
     @FXML
     internal var accountView: HBox? = null
 
     @FXML
-    internal var content: FittedWebView? = null
+    internal var parseContent: VBox? = null
 
     @FXML
     internal var favButton: Button? = null
@@ -36,8 +38,7 @@ class TootController(private val status: Status,
     @FXML
     override fun initialize() {
         accountViewer.view(parent = accountView!!, item = status.account!!, mode = ViewerMode.APPEND)
-        content!!.setContent(status.content)
-        content!!.setHtmlStylesheetLocation(javaClass.getResource("/css/toot-content.css").toString())
+        parseContent?.children?.add(tootParser.invoke(status.content))
         if (status.isFavourited) {
             favButton!!.text = "★"
         } else {

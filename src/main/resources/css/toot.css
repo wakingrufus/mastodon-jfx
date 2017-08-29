@@ -1,6 +1,6 @@
 .tootWrapper {
     -fx-background-color: #061018;
-    -fx-min-width: 100%;
+    -fx-max-width: 30em;
     -fx-text-fill: white;
     -fx-padding: 1em;
     -fx-alignment: top-left;
@@ -18,15 +18,16 @@
 }
 
 .tootContent {
-    -fx-min-height: 8em;
+    -fx-background-color: #0E2333;
+    -fx-text-fill: white;
+    -fx-min-width: 28em;
 }
-/*
-.actionButton {
-    -fx-background-color: #061018;
-    -fx-text-fill: #2b6a9b;
-    -fx-background-radius: 30;
-    -fx-background-insets: 0;
-    -fx-font-size: 2em;
-    -fx-cursor: hand;
+
+.tootText {
+    -fx-fill: white;
+
 }
-*/
+
+.tootLink {
+    -fx-text-fill: #AAAAFF
+}

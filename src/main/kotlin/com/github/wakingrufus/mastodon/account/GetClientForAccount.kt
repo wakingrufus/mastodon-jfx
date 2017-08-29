@@ -1,5 +1,6 @@
 package com.github.wakingrufus.mastodon.account
 
+import com.github.wakingrufus.mastodon.data.AccountState
 import com.sys1yagi.mastodon4j.MastodonClient
 
 

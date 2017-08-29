@@ -31,6 +31,5 @@ public class Main extends Application {
         Config config = new FileConfig(configFile, objectMapper);
         UiService uiService = new UiService(stage, config);
         uiService.init();
-
     }
 }

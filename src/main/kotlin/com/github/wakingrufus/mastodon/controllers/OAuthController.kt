@@ -2,9 +2,7 @@ package com.github.wakingrufus.mastodon.controllers
 
 import com.github.wakingrufus.mastodon.events.OAuthStartEvent
 import com.github.wakingrufus.mastodon.events.OAuthTokenEvent
-import com.github.wakingrufus.mastodon.ui.Controller
 import com.sys1yagi.mastodon4j.MastodonClient
-import com.sys1yagi.mastodon4j.api.entity.Account
 import com.sys1yagi.mastodon4j.api.entity.auth.AppRegistration
 import javafx.event.Event
 import javafx.fxml.FXML

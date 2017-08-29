@@ -1,10 +1,8 @@
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <HBox xmlns:fx="http://javafx.com/fxml" styleClass="accountContainer">
     <VBox>
-        <Label fx:id="serverName" styleClass="serverName"/>
         <HBox fx:id="accountView"/>
         <HBox>
             <Button fx:id="homeFeedButton" text="⌂" accessibleText="Home"/>

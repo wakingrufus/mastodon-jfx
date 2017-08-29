@@ -1,6 +1,6 @@
 package com.github.wakingrufus.mastodon.ui
 
-import com.github.wakingrufus.mastodon.account.AccountState
+import com.github.wakingrufus.mastodon.data.AccountState
 import javafx.scene.control.ChoiceDialog
 import javafx.scene.control.Dialog
 import javafx.stage.StageStyle

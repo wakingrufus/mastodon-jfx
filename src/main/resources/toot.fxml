@@ -1,10 +1,10 @@
-<?import com.github.wakingrufus.mastodon.ui.FittedWebView?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+
 <VBox xmlns:fx="http://javafx.com/fxml" stylesheets="@css/toot.css" styleClass="tootWrapper">
     <HBox fx:id="accountView"/>
-    <FittedWebView fx:id="content" styleClass="tootContent"/>
+    <VBox fx:id="parseContent" styleClass="tootContent"/>
     <HBox fx:id="tootActions">
         <Button fx:id="replyButton">
             <text>↰</text>

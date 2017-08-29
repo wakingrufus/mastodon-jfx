@@ -1,6 +1,6 @@
 package com.github.wakingrufus.mastodon.controllers
 
-import com.github.wakingrufus.mastodon.account.AccountState
+import com.github.wakingrufus.mastodon.data.AccountState
 import com.github.wakingrufus.mastodon.ui.Viewer
 import com.github.wakingrufus.mastodon.ui.ViewerMode
 import com.sys1yagi.mastodon4j.api.entity.Account
@@ -15,7 +15,9 @@ import mu.KLogging
 class NotificationController(private val notification: Notification,
                              private val accountPrompter: () -> AccountState?,
                              private val statusViewer: Viewer<Status> = Viewer(
-                                     controller = { item -> TootController(status = item, accountPrompter = accountPrompter) },
+                                     controller = { item -> TootController(
+                                             status = item,
+                                             accountPrompter = accountPrompter) },
                                      template = "/toot.fxml"),
                              private val accountViewer: Viewer<Account> = Viewer(
                                      controller = { account -> AccountController(account) },
