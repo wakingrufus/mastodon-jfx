@@ -1,5 +1,6 @@
 package com.github.wakingrufus.mastodon.ui
 
+import com.github.wakingrufus.mastodon.controllers.Controller
 import javafx.fxml.FXMLLoader
 import javafx.scene.layout.Pane
 import mu.KLogging

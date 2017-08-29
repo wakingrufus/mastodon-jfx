@@ -1,7 +1,6 @@
 package com.github.wakingrufus.mastodon.controllers
 
-import com.github.wakingrufus.mastodon.account.AccountState
-import com.github.wakingrufus.mastodon.ui.Controller
+import com.github.wakingrufus.mastodon.data.AccountState
 import com.sys1yagi.mastodon4j.api.entity.Notification
 import javafx.application.Platform
 import javafx.collections.ListChangeListener

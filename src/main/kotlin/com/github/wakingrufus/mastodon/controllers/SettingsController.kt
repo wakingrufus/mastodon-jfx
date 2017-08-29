@@ -1,8 +1,7 @@
 package com.github.wakingrufus.mastodon.controllers
 
-import com.github.wakingrufus.mastodon.account.AccountState
+import com.github.wakingrufus.mastodon.data.AccountState
 import com.github.wakingrufus.mastodon.events.CreateAccountEvent
-import com.github.wakingrufus.mastodon.ui.Controller
 import com.github.wakingrufus.mastodon.ui.Viewer
 import com.github.wakingrufus.mastodon.ui.ViewerMode
 import javafx.collections.ListChangeListener

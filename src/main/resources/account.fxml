@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <HBox xmlns:fx="http://javafx.com/fxml" styleClass="accountContainer" stylesheets="@css/account.css">
-    <ImageView fx:id="avatarView" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+    <ImageView fx:id="avatarView" fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
         <image>
             <Image fx:id="avatar" url="@/images/avatar-default.png"/>
         </image>

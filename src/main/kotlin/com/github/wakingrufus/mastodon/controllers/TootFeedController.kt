@@ -1,18 +1,19 @@
 package com.github.wakingrufus.mastodon.controllers
 
-import com.github.wakingrufus.mastodon.account.AccountState
+import com.github.wakingrufus.mastodon.data.AccountState
+import com.github.wakingrufus.mastodon.data.StatusFeed
 import com.github.wakingrufus.mastodon.ui.Viewer
 import com.github.wakingrufus.mastodon.ui.ViewerMode
 import com.sys1yagi.mastodon4j.api.entity.Status
 import javafx.application.Platform
 import javafx.collections.ListChangeListener
-import javafx.collections.ObservableList
 import javafx.fxml.FXML
+import javafx.scene.control.Label
 import javafx.scene.layout.VBox
 import mu.KLogging
 import java.io.IOException
 
-class TootFeedController(private val statuses: ObservableList<Status>,
+class TootFeedController(private val statusFeed: StatusFeed,
                          private val accountPrompter: () -> AccountState?,
                          private val statusViewer: Viewer<Status> = Viewer(
                                  controller = { item ->
@@ -20,14 +21,18 @@ class TootFeedController(private val statuses: ObservableList<Status>,
                                              accountPrompter = accountPrompter,
                                              status = item)
                                  },
-                                 template = "/toot.fxml")) {
+                                 template = "/toot.fxml")) : Controller<StatusFeed> {
     companion object : KLogging()
 
     @FXML
     internal var tootFeedWrapper: VBox? = null
 
-    fun initialize() {
-        statuses.forEach {
+    @FXML
+    internal var feedLabel: Label? = null
+
+    override fun initialize() {
+        feedLabel?.text = statusFeed.name+ " @ "+ statusFeed.server
+        statusFeed.statuses.forEach {
             try {
                 statusViewer.view(parent = tootFeedWrapper!!, item = it)
             } catch (e: IOException) {
@@ -35,7 +40,7 @@ class TootFeedController(private val statuses: ObservableList<Status>,
             }
         }
 
-        statuses.addListener { change: ListChangeListener.Change<out Status>? ->
+        statusFeed.statuses.addListener { change: ListChangeListener.Change<out Status>? ->
             while (change?.next()!!) {
                 change.addedSubList?.forEach {
                     Platform.runLater({

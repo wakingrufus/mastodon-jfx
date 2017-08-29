@@ -3,17 +3,17 @@ package com.github.wakingrufus.mastodon.ui;
 import com.github.wakingrufus.mastodon.EventHandlersKt;
 import com.github.wakingrufus.mastodon.LoginEventHandlersKt;
 import com.github.wakingrufus.mastodon.account.AccountConfig;
-import com.github.wakingrufus.mastodon.account.AccountState;
 import com.github.wakingrufus.mastodon.account.AddAccountToConfigKt;
 import com.github.wakingrufus.mastodon.account.CreateAccountConfigKt;
 import com.github.wakingrufus.mastodon.account.CreateAccountStateKt;
 import com.github.wakingrufus.mastodon.client.ClientBuilderKt;
 import com.github.wakingrufus.mastodon.config.Config;
+import com.github.wakingrufus.mastodon.data.AccountState;
+import com.github.wakingrufus.mastodon.data.StatusFeed;
 import com.github.wakingrufus.mastodon.events.NewAccountEvent;
-import com.github.wakingrufus.mastodon.events.ViewFeedEvent;
+import com.github.wakingrufus.mastodon.events.ViewFeedEventKt;
 import com.github.wakingrufus.mastodon.events.ViewNotificationsEvent;
 import com.sys1yagi.mastodon4j.MastodonClient;
-import com.sys1yagi.mastodon4j.api.entity.Status;
 import com.sys1yagi.mastodon4j.api.method.Accounts;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -28,6 +28,7 @@ import javafx.stage.Stage;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
+
 
 @Slf4j
 public class UiService {
@@ -44,7 +45,7 @@ public class UiService {
     public void init() {
 
         final ObservableList<AccountState> accountList = FXCollections.observableArrayList();
-        final ObservableList<ObservableList<Status>> feeds = FXCollections.observableArrayList();
+        final ObservableList<StatusFeed> feeds = FXCollections.observableArrayList();
 
         final double rootEm = Math.rint(new Text().getLayoutBounds().getHeight());
 
@@ -86,7 +87,7 @@ public class UiService {
                 });
         EventHandlersKt.attachEventHandlers(root);
 
-        root.addEventHandler(ViewFeedEvent.VIEW_FEED, viewFeedEvent -> feeds.add(viewFeedEvent.getFeed()));
+        root.addEventHandler(ViewFeedEventKt.getVIEW_FEED(), viewFeedEvent -> feeds.add(viewFeedEvent.getFeed()));
         root.addEventHandler(ViewNotificationsEvent.VIEW_NOTIFICATIONS,
                 event -> ViewAccountNotificationsKt.viewAccountNotifications(notificationBox, event.getFeed(), accountList));
 

@@ -1,16 +1,17 @@
 package com.github.wakingrufus.mastodon.ui
 
-import com.github.wakingrufus.mastodon.account.AccountState
-import com.sys1yagi.mastodon4j.api.entity.Status
+import com.github.wakingrufus.mastodon.controllers.FeedsController
+import com.github.wakingrufus.mastodon.data.AccountState
+import com.github.wakingrufus.mastodon.data.StatusFeed
 import javafx.collections.ObservableList
 import javafx.scene.layout.Pane
 import mu.KotlinLogging
 
 private val logger = KotlinLogging.logger {}
 fun viewAccountFeeds(parent: Pane,
-                     feedStates: ObservableList<ObservableList<Status>>,
+                     feedStates: ObservableList<StatusFeed>,
                      accounts: List<AccountState>) {
-    Viewer<ObservableList<ObservableList<Status>>>(
+    Viewer<ObservableList<StatusFeed>>(
             controller = { feeds ->
                 FeedsController(
                         feedStates = feeds,

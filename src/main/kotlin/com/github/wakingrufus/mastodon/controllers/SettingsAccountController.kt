@@ -1,22 +1,24 @@
 package com.github.wakingrufus.mastodon.controllers
 
-import com.github.wakingrufus.mastodon.account.AccountState
+import com.github.wakingrufus.mastodon.data.AccountState
 import com.github.wakingrufus.mastodon.events.ViewFeedEvent
 import com.github.wakingrufus.mastodon.events.ViewNotificationsEvent
-import com.github.wakingrufus.mastodon.ui.Controller
 import com.github.wakingrufus.mastodon.ui.Viewer
 import com.github.wakingrufus.mastodon.ui.ViewerMode
 import com.sys1yagi.mastodon4j.api.entity.Account
 import javafx.event.Event
 import javafx.fxml.FXML
 import javafx.scene.control.Button
-import javafx.scene.control.Label
 import javafx.scene.layout.HBox
 import mu.KLogging
 
 class SettingsAccountController(private val accountState: AccountState,
                                 private val accountViewer: Viewer<Account> = Viewer(
-                                        controller = { account -> AccountController(account) },
+                                        controller = { account ->
+                                            AccountController(
+                                                    account = account,
+                                                    server = accountState.client.getInstanceName())
+                                        },
                                         template = "/account.fxml"))
     : Controller<AccountState> {
     companion object : KLogging()
@@ -31,12 +33,9 @@ class SettingsAccountController(private val accountState: AccountState,
     internal var notificationFeedButton: Button? = null
     @FXML
     internal var accountView: HBox? = null
-    @FXML
-    internal var serverName: Label? = null
 
     @FXML
     override fun initialize() {
-        serverName?.text = accountState.client.getInstanceName()
         if (accountView == null) {
             logger.error { "null account" }
         } else {

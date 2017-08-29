@@ -1,6 +1,6 @@
 package com.github.wakingrufus.mastodon.events;
 
-import com.github.wakingrufus.mastodon.account.AccountState;
+import com.github.wakingrufus.mastodon.data.AccountState;
 import javafx.beans.NamedArg;
 import javafx.event.Event;
 import javafx.event.EventTarget;

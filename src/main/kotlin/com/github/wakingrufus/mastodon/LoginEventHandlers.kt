@@ -1,6 +1,6 @@
 package com.github.wakingrufus.mastodon
 
-import com.github.wakingrufus.mastodon.account.AccountState
+import com.github.wakingrufus.mastodon.data.AccountState
 import com.github.wakingrufus.mastodon.account.addAccountToConfig
 import com.github.wakingrufus.mastodon.account.createAccountConfig
 import com.github.wakingrufus.mastodon.account.createAccountState
@@ -18,9 +18,9 @@ import mu.KotlinLogging
 
 private val logger = KotlinLogging.logger {}
 fun attachLoginEventHandlersFromJava(addToView: (Pane) -> Pane,
-                             rootPane: BorderPane,
-                             accountList: ObservableList<AccountState>,
-                             config: Config) {
+                                     rootPane: BorderPane,
+                                     accountList: ObservableList<AccountState>,
+                                     config: Config) {
     attachLoginEventHandlers(addToView = addToView, rootPane = rootPane, accountList = accountList, config = config)
 }
 
