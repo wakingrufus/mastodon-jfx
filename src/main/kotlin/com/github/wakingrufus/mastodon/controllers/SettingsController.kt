@@ -1,22 +1,32 @@
 package com.github.wakingrufus.mastodon.controllers
 
 import com.github.wakingrufus.mastodon.data.AccountState
-import com.github.wakingrufus.mastodon.events.CreateAccountEvent
+import com.github.wakingrufus.mastodon.data.NotificationFeed
+import com.github.wakingrufus.mastodon.data.StatusFeed
 import com.github.wakingrufus.mastodon.ui.Viewer
 import com.github.wakingrufus.mastodon.ui.ViewerMode
 import javafx.collections.ListChangeListener
 import javafx.collections.ObservableList
 import javafx.event.ActionEvent
-import javafx.event.Event
 import javafx.fxml.FXML
 import javafx.scene.control.Button
+import javafx.scene.layout.Pane
 import javafx.scene.layout.VBox
 import mu.KLogging
 
-class SettingsController(private val accountStates: ObservableList<AccountState>,
+class SettingsController(private val createAccount: () -> Pane,
+                         private val accountStates: ObservableList<AccountState>,
                          private val settingsAccountViewer: Viewer<AccountState> = Viewer(
-                                 controller = { accountState -> SettingsAccountController(accountState = accountState) },
-                                 template = "/settings-account.fxml")) : Controller<ObservableList<AccountState>> {
+                                 controller = { accountState ->
+                                     SettingsAccountController(
+                                             accountState = accountState,
+                                             viewFeed = viewFeed,
+                                             viewNotificationFeed = viewNotifications)
+                                 },
+                                 template = "/settings-account.fxml"),
+                         private val viewFeed: (StatusFeed) -> Any,
+                         private val viewNotifications: (NotificationFeed) -> Any)
+    : Controller<ObservableList<AccountState>> {
     companion object : KLogging()
 
     @FXML
@@ -24,7 +34,7 @@ class SettingsController(private val accountStates: ObservableList<AccountState>
 
     @FXML
     fun handleNewIdButtonAction(event: ActionEvent) {
-        Event.fireEvent(newIdButton, CreateAccountEvent())
+        createAccount.invoke()
     }
 
     @FXML

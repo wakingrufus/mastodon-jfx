@@ -1,8 +1,7 @@
 buildscript {
-    ext.kotlin_version = '1.1.4'
     dependencies {
         classpath group: 'de.dynamicfiles.projects.gradle.plugins', name: 'javafx-gradle-plugin', version: '8.8.2'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.1.4"
     }
     repositories {
         mavenCentral()
@@ -24,20 +23,20 @@ repositories {
     maven { url 'https://jitpack.io' }
 }
 
-version = "0.4.0"
+version = "0.5.0"
 
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre8"
     compile 'org.jetbrains.kotlinx:kotlinx-coroutines-core:0.17'
-    compile 'org.projectlombok:lombok:1.16.+'
+    compile 'org.projectlombok:lombok:1.16.18'
     compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
     compile group: 'org.slf4j', name: 'slf4j-log4j12', version: '1.7.25'
-    compile 'org.glassfish.jersey.core:jersey-client:2.25.+'
+    compile 'org.glassfish.jersey.core:jersey-client:2.25.1'
     compile 'com.fasterxml.jackson.core:jackson-core:2.7.9'
     compile 'com.fasterxml.jackson.core:jackson-databind:2.7.9.1'
     compile 'com.fasterxml.jackson.module:jackson-module-parameter-names:2.7.9'
     compile "com.fasterxml.jackson.module:jackson-module-kotlin:2.7.9"
-    compile 'com.github.sys1yagi:mastodon4j:1.1.+'
+    compile 'com.github.sys1yagi:mastodon4j:1.2.0'
     compile 'io.github.microutils:kotlin-logging:1.4.4'
     compile "org.jetbrains.kotlin:kotlin-reflect"
     compile "org.jsoup:jsoup:1.10.3"
@@ -53,8 +52,8 @@ dependencies {
 
 jfx {
     // minimal requirement for jfxJar-task
-    mainClassName = 'com.github.wakingrufus.mastodon.Main'
-    mainClass = 'com.github.wakingrufus.mastodon.Main'
+    mainClassName = 'com.github.wakingrufus.mastodon.MainKt'
+    mainClass = 'com.github.wakingrufus.mastodon.MainKt'
     appName = "mastodon-jfx"
     // minimal requirement for jfxNative-task
     vendor = 'wakingrufus'

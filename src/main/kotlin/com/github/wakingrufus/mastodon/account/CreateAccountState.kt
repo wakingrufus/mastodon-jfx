@@ -37,7 +37,7 @@ fun createAccountState(client: MastodonClient): AccountState {
                     fetcher = buildPublicClient(client)::getFederatedPublic,
                     listener = streamingClient::federatedPublic)
             val notificationShutdownable = populateNotificationFeed(
-                    feed = newAccountState.notificationFeed,
+                    feed = newAccountState.notificationFeed.notifications,
                     fetcher = buildNotificationsClient(client)::getNotifications,
                     listener = streamingClient::user)
         }

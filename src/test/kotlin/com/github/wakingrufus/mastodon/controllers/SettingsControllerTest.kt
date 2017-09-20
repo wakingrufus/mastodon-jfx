@@ -2,6 +2,7 @@ package com.github.wakingrufus.mastodon.controllers
 
 import com.github.wakingrufus.mastodon.data.AccountState
 import com.google.gson.Gson
+import com.nhaarman.mockito_kotlin.mock
 import com.sys1yagi.mastodon4j.MastodonClient
 import com.sys1yagi.mastodon4j.api.entity.Account
 import javafx.collections.FXCollections
@@ -43,7 +44,11 @@ public class SettingsControllerTest : ApplicationTest() {
                         okHttpClientBuilder = OkHttpClient.Builder())
                         .accessToken("test").build())
         accounts.add(accountState)
-        val instance = SettingsController(accounts)
+        val instance = SettingsController(
+                accountStates = accounts,
+                createAccount = { mock() },
+                viewFeed = { mock() },
+                viewNotifications = { mock() })
         val fxmlLoader = FXMLLoader(javaClass.getResource("/settings.fxml"))
         fxmlLoader.setController(instance)
         val load: Parent = fxmlLoader.load()

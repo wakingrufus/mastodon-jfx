@@ -1,6 +1,7 @@
 package com.github.wakingrufus.mastodon.controllers
 
 import com.github.wakingrufus.mastodon.data.AccountState
+import com.github.wakingrufus.mastodon.data.NotificationFeed
 import com.sys1yagi.mastodon4j.api.entity.Notification
 import javafx.application.Platform
 import javafx.collections.ListChangeListener
@@ -11,9 +12,9 @@ import javafx.scene.layout.VBox
 import mu.KLogging
 import java.io.IOException
 
-class NotificationFeedController(private val statuses: ObservableList<Notification>,
+class NotificationFeedController(private val notificationFeed: NotificationFeed,
                                  private val accountPrompter: () -> AccountState?)
-    : Controller<ObservableList<Notification>> {
+    : Controller<NotificationFeed> {
     companion object : KLogging()
 
     @FXML
@@ -21,14 +22,14 @@ class NotificationFeedController(private val statuses: ObservableList<Notificati
 
     @FXML
     override fun initialize() {
-        statuses.forEach {
+        notificationFeed.notifications.forEach {
             try {
                 notifications?.children?.add(buildNotificationPanel(it))
             } catch (e: IOException) {
                 e.printStackTrace()
             }
         }
-        statuses.addListener { change: ListChangeListener.Change<out Notification>? ->
+        notificationFeed.notifications.addListener { change: ListChangeListener.Change<out Notification>? ->
             while (change?.next()!!) {
                 change.addedSubList?.forEach {
                     Platform.runLater({

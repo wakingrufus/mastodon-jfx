@@ -1,13 +1,15 @@
 package com.github.wakingrufus.mastodon.controllers
 
-import com.github.wakingrufus.mastodon.events.ServerConnectEvent
-import javafx.event.Event
+import com.github.wakingrufus.mastodon.client.createServerClient
+import com.github.wakingrufus.mastodon.client.registerApp
+import com.sys1yagi.mastodon4j.MastodonClient
+import com.sys1yagi.mastodon4j.api.entity.auth.AppRegistration
 import javafx.fxml.FXML
 import javafx.scene.control.Button
 import javafx.scene.control.TextField
 import mu.KLogging
 
-class LoginController : Controller<Unit> {
+class LoginController(private val startOAuth: (AppRegistration, MastodonClient) -> Any) : Controller<Unit> {
     companion object : KLogging()
 
     @FXML
@@ -20,7 +22,8 @@ class LoginController : Controller<Unit> {
     override fun initialize() {
         tokenButton?.setOnAction { e ->
             logger.info("server: ${serverField?.text}")
-            Event.fireEvent(e.target, ServerConnectEvent(e.source, e.target, serverField?.text))
+            val client = createServerClient(serverField!!.text)
+            startOAuth(registerApp(client)!!, client)
         }
     }
 }
