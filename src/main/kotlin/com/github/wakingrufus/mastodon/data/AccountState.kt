@@ -21,7 +21,10 @@ data class AccountState(val account: Account,
                                 name = "Federated",
                                 server = client.getInstanceName(),
                                 statuses = FXCollections.observableArrayList<Status>()),
-                        val notificationFeed: ObservableList<Notification> = FXCollections.observableArrayList<Notification>()) {
+                        val notificationFeed: NotificationFeed = NotificationFeed(
+                                name = "Notifications",
+                                server = client.getInstanceName(),
+                                notifications = FXCollections.observableArrayList<Notification>())) {
     override fun toString(): String {
         return account.displayName + "@" + client.getInstanceName()
     }
