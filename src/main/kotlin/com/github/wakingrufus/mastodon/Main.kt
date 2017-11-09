@@ -1,7 +1,5 @@
 package com.github.wakingrufus.mastodon
 
-import javafx.application.Application
+import tornadofx.launch
 
-fun main(args: Array<String>) {
-    Application.launch(MastodonApplication::class.java, *args)
-}
+fun main(args: Array<String>) = launch<MastodonApplication>(args)

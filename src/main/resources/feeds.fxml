@@ -1,2 +1,0 @@
-<?import javafx.scene.layout.HBox?>
-<HBox xmlns:fx="http://javafx.com/fxml" fx:id="feedsWrapper" stylesheets="@css/feeds.css" styleClass="feedsWrapper"/>

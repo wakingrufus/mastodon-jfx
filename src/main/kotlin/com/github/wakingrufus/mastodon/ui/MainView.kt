@@ -1,49 +1,68 @@
 package com.github.wakingrufus.mastodon.ui
 
-import com.github.wakingrufus.mastodon.MastodonApplication
-import javafx.fxml.FXMLLoader
-import javafx.scene.layout.BorderPane
-import javafx.scene.layout.Pane
+import com.github.wakingrufus.mastodon.account.createAccountState
+import com.github.wakingrufus.mastodon.client.createAccountClient
+import com.github.wakingrufus.mastodon.config.ConfigurationHandler
+import com.github.wakingrufus.mastodon.config.FileConfigurationHandler
+import com.github.wakingrufus.mastodon.data.AccountState
+import com.github.wakingrufus.mastodon.data.NotificationFeed
+import com.github.wakingrufus.mastodon.data.StatusFeed
+import javafx.collections.FXCollections
 import mu.KLogging
-import java.io.IOException
+import tornadofx.View
+import tornadofx.borderpane
+import tornadofx.percent
+import java.io.File
 
-
-class MainView(val rootEm: Double) {
+class MainView : View() {
     companion object : KLogging()
 
-    val root: BorderPane
+    val accountStates = FXCollections.observableArrayList<AccountState>()
+    val statusFeeds = FXCollections.observableArrayList<StatusFeed>()
+    val settingsView = find<SettingsView>(mapOf(
+            "accountStates" to accountStates,
+            "createAccount" to this::newAccount,
+            "viewNotifications" to this::viewNotifications,
+            "viewFeed" to this::viewFeed))
+    val statusFeedsView = find<StatusFeedsView>(mapOf(
+            "statusFeeds" to statusFeeds,
+            "accounts" to accountStates))
+
+    val controller: MainController by inject()
+    val configHandler: ConfigurationHandler =
+            FileConfigurationHandler(File(File(System.getProperty("user.home")), ".mastodon.txt"))
+
+    override val root = borderpane {
+        minHeight = 100.percent.value
+        //   center(FeedsController::class)
+        left = settingsView.root
+
+    }
+
+    fun viewFeed(statusFeed: StatusFeed) {
+        statusFeeds.add(statusFeed)
+        viewFeeds()
+    }
+
+    fun viewNotifications(notificationFeed: NotificationFeed) {
+        root.right = find<NotificationFeedView>(mapOf("notificationFeed" to notificationFeed)).root
+    }
+
+    fun viewFeeds() {
+        root.center = statusFeedsView.root
+    }
+
+    fun newAccount() {
+        root.center = OAuthView(onComplete = { accountStates.add(it) }).root
+    }
 
     init {
-        val fxmlLoader = FXMLLoader(MastodonApplication::class.java.getResource("/main.fxml"))
-
-        try {
-            root = fxmlLoader.load<BorderPane>()
-        } catch (e: IOException) {
-            logger.error("error loading main: ${e.localizedMessage}", e)
-            throw RuntimeException("error loading main: ${e.localizedMessage}")
+        controller.readConfig()
+        configHandler.readFileConfig().identities.forEach { (accessToken, _, _, _, server) ->
+            val client = createAccountClient(server, accessToken)
+            accountStates.add(createAccountState(client))
         }
-
-        //    root.setStyle("-fx-min-height: 100%;");
-
     }
 
-    fun newMainView(): Pane {
-        val pane = mainPane()
-        pane.setMinHeight(rootEm * 60)
-        root.center = pane
-        return pane
-    }
 
-    fun newNotificationView(): Pane {
-        val pane = mainPane()
-        pane.minWidth = rootEm * 10
-        root.right = pane
-        return pane
-    }
-
-    fun newSettingsView(): Pane {
-        val pane = mainPane()
-        root.left = pane
-        return pane
-    }
 }

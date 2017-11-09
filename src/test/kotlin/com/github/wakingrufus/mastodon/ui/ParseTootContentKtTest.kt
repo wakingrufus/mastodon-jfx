@@ -1,15 +1,6 @@
 package com.github.wakingrufus.mastodon.ui
 
-import com.github.wakingrufus.mastodon.controllers.FeedsController
-import com.github.wakingrufus.mastodon.data.AccountState
-import com.github.wakingrufus.mastodon.data.StatusFeed
-import com.nhaarman.mockito_kotlin.mock
-import com.sys1yagi.mastodon4j.MastodonClient
-import com.sys1yagi.mastodon4j.api.entity.Account
-import com.sys1yagi.mastodon4j.api.entity.Status
-import javafx.collections.FXCollections
-import javafx.collections.ObservableList
-import javafx.fxml.FXMLLoader
+import javafx.embed.swing.JFXPanel
 import javafx.scene.Parent
 import javafx.scene.Scene
 import javafx.scene.control.Hyperlink
@@ -59,6 +50,7 @@ class ParseTootContentKtTest: ApplicationTest() {
 
     @Throws(Exception::class)
     override fun start(stage: Stage) {
+        JFXPanel()
         val load: Parent = HBox()
         val scene = Scene(load, 800.0, 600.0)
         stage.scene = scene
