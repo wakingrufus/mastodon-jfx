@@ -1,0 +1,2 @@
+<?import javafx.scene.layout.StackPane?>
+<StackPane xmlns:fx="http://javafx.com/fxml" fx:id="renderArea"/>

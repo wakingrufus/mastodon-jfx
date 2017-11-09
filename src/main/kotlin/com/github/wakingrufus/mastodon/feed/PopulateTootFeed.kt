@@ -8,6 +8,7 @@ import com.sys1yagi.mastodon4j.api.Shutdownable
 import com.sys1yagi.mastodon4j.api.entity.Notification
 import com.sys1yagi.mastodon4j.api.entity.Status
 import com.sys1yagi.mastodon4j.api.exception.Mastodon4jRequestException
+import javafx.application.Platform
 import javafx.collections.ObservableList
 import mu.KotlinLogging
 
@@ -19,7 +20,9 @@ fun populateTootFeed(feed: ObservableList<Status>,
     try {
         val statusPageable = fetcher.invoke(Range()).execute()
         val statuses = statusPageable.part
-        feed += statuses
+        Platform.runLater({
+            feed += statuses
+        })
 
     } catch (e: Mastodon4jRequestException) {
         logger.error("Error fetching feed: " + e.localizedMessage, e)
@@ -27,7 +30,9 @@ fun populateTootFeed(feed: ObservableList<Status>,
 
     val shutdownable = listener.invoke(object : Handler {
         override fun onStatus(status: Status) {
-            feed.add(element = status, index = 0)
+            Platform.runLater({
+                feed.add(element = status, index = 0)
+            })
         }
 
         override fun onNotification(notification: Notification) {

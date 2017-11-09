@@ -1,5 +1,6 @@
 package com.github.wakingrufus.mastodon.client
 
+import com.github.wakingrufus.mastodon.data.OAuthModel
 import com.sys1yagi.mastodon4j.MastodonClient
 import com.sys1yagi.mastodon4j.api.entity.auth.AccessToken
 import com.sys1yagi.mastodon4j.api.exception.Mastodon4jRequestException
@@ -16,3 +17,6 @@ fun getAccessToken(mastodonClient: MastodonClient, clientId: String, clientSecre
         throw e
     }
 }
+
+fun getAccessToken(oAuth : OAuthModel): AccessToken =
+        getAccessToken(oAuth.client,oAuth.appRegistration.clientId, oAuth.appRegistration.clientSecret, oAuth.token!!)

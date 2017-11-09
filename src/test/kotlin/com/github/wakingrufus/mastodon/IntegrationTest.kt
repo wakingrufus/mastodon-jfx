@@ -18,7 +18,7 @@ class IntegrationTest : ApplicationTest() {
         val configHandler = mock<ConfigurationHandler> {
             on { readFileConfig() } doReturn config
         }
-        MastodonApplication(configHandler = configHandler).start(stage)
+        MastodonApplication().start(stage)
     }
 
     @Test

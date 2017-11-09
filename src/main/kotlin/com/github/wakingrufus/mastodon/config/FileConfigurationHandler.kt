@@ -8,7 +8,8 @@ import mu.KLogging
 import java.io.File
 import java.io.IOException
 
-class FileConfigurationHandler(val file : File) : ConfigurationHandler {
+class FileConfigurationHandler(val file: File = File(File(System.getProperty("user.home")), ".mastodon.txt"))
+    : ConfigurationHandler {
     companion object : KLogging() {
         val objectMapper = ObjectMapper()
                 .registerModule(ParameterNamesModule())
