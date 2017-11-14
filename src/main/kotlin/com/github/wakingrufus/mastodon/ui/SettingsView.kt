@@ -4,13 +4,15 @@ import com.github.wakingrufus.mastodon.data.AccountState
 import com.github.wakingrufus.mastodon.data.NotificationFeed
 import com.github.wakingrufus.mastodon.data.StatusFeed
 import com.github.wakingrufus.mastodon.ui.styles.DefaultStyles
+import com.sys1yagi.mastodon4j.api.entity.Account
 import javafx.collections.ObservableList
 import javafx.geometry.Pos
 import javafx.scene.paint.Color
 import mu.KLogging
 import tornadofx.*
 
-class SettingsView : View() {
+class SettingsView(accountFragment: (String, Account) -> AccountFragment =
+                   { s: String, a: Account -> find(params = mapOf("server" to s, "account" to a)) }) : View() {
     companion object : KLogging()
 
     val createAccount: () -> Unit by param()
@@ -34,7 +36,7 @@ class SettingsView : View() {
             children.bind(accountStates) {
                 hbox {
                     vbox {
-                        this += AccountFragment(account = it.account, server = it.client.getInstanceName())
+                        this += accountFragment(it.client.getInstanceName(), it.account)
                         hbox {
                             button("⌂") {
                                 addClass(DefaultStyles.smallButton)

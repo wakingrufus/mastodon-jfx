@@ -60,7 +60,7 @@ class StatusFeedsView : View() {
                                     backgroundColor = multi(DefaultStyles.backgroundColor)
                                     textFill = Color.WHITE
                                 }
-                                this += AccountFragment(account = it.account!!, server = parseUrlFunc(it.uri))
+                                this += find<AccountFragment>(mapOf("account" to it.account!!, "server" to parseUrlFunc(it.uri)))
                                 val toot = parseToot(it.content)
                                 toot.style {
                                     backgroundColor = multi(DefaultStyles.backgroundColor)

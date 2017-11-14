@@ -53,7 +53,7 @@ class MainView : View() {
     }
 
     fun newAccount() {
-        root.center = OAuthView(onComplete = { accountStates.add(it) }).root
+        root.center = find<OAuthView>(mapOf("onComplete" to { a: AccountState -> accountStates.add(a) })).root
     }
 
     init {

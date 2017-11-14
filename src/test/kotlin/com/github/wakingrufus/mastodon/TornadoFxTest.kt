@@ -2,37 +2,35 @@ package com.github.wakingrufus.mastodon
 
 import javafx.application.Platform
 import javafx.scene.Scene
-import javafx.scene.layout.Pane
-import javafx.scene.layout.StackPane
 import javafx.stage.Stage
 import org.testfx.framework.junit.ApplicationTest
 import tornadofx.UIComponent
+import tornadofx.View
 import tornadofx.clear
-import tornadofx.plusAssign
+import tornadofx.stackpane
 import java.time.Instant
 
-fun UIComponent.setParams(map: Map<String, Any?>) {
-    this::paramsProperty.get().value = map
-}
-
 open class TornadoFxTest : ApplicationTest() {
-    lateinit var wrapper: Pane
+    lateinit var wrapper: TestView
     override fun start(stage: Stage) {
-        wrapper = StackPane()
-        val scene = Scene(wrapper, 800.0, 600.0)
+        wrapper = TestView()
+        val scene = Scene(wrapper.root, 800.0, 600.0)
         stage.scene = scene
         stage.show()
     }
 
-    protected fun showView(view: UIComponent) {
-        Platform.runLater {
-            wrapper.clear()
-            wrapper += view.root
+    protected inline fun <reified T : UIComponent> showViewWithParams(params: Map<*, Any?>?) = wrapper.addViewWithParams<T>(params)
+
+    class TestView : View() {
+        override val root = stackpane { }
+        inline fun <reified T : UIComponent> findView(params: Map<*, Any?>?) = find<T>(params)
+        inline fun <reified T : UIComponent> addViewWithParams(params: Map<*, Any?>?) {
+            Platform.runLater {
+                root.add(findView<T>(params))
+            }
+            waitFor(condition = { root.children.size > 0 })
         }
-        waitFor(condition = { wrapper.children.size > 0 && wrapper.children[0] == view.root })
     }
-
-
 }
 
 fun waitFor(condition: () -> Boolean, maxMillis: Long = 10000) {
