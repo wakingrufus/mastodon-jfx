@@ -10,9 +10,11 @@ import tornadofx.*
 import java.net.HttpURLConnection
 import java.net.URL
 
-class AccountFragment(val account: Account, val server: String) : Fragment() {
+class AccountFragment : Fragment() {
     companion object : KLogging()
 
+    val account: Account by param()
+    val server: String by param()
     lateinit var avatar: ImageView
     override val root = hbox {
         style {

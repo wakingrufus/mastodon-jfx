@@ -15,15 +15,18 @@ import javafx.scene.paint.Color
 import mu.KLogging
 import tornadofx.*
 
-class OAuthView(val register: (MastodonClient) -> AppRegistration? = ::registerApp,
-                val serverClient: (String) -> MastodonClient = ::createServerClient,
-                val onComplete: (AccountState) -> Unit,
-                val oAuthUrlBuilder: (OAuthModel) -> String = ::getOAuthUrl,
-                val completeOAuthFunction: (OAuthModel) -> Unit = { model ->
-                    completeOAuth(oAuth = model, onComplete = onComplete)
-                })
-    : View() {
+class OAuthView : Fragment() {
     companion object : KLogging()
+
+    val buildModel: (String) -> OAuthModel by param(defaultValue = {serverUrl: String ->
+        val client = createServerClient(serverUrl)
+         OAuthModel(appRegistration = registerApp(client)!!, client = client)
+    })
+    val onComplete: (AccountState) -> Unit by param()
+    val oAuthUrlBuilder: (OAuthModel) -> String by param(::getOAuthUrl)
+    val completeOAuthFunction: (OAuthModel) -> Unit by param({ model ->
+        completeOAuth(oAuth = model, onComplete = onComplete)
+    })
 
     lateinit var serverField: TextField
     lateinit var vbox: VBox
@@ -58,13 +61,14 @@ class OAuthView(val register: (MastodonClient) -> AppRegistration? = ::registerA
                 }
             }
         }
-        loginWrapper = vbox()
+        loginWrapper = vbox {
+            id = "login-wrapper"
+        }
     }
 
     fun showLogin(serverUrl: String) {
         loginWrapper.clear()
-        val client = serverClient(serverUrl)
-        val oAuthModel = OAuthModel(appRegistration = register(client)!!, client = client)
+        val oAuthModel = buildModel(serverUrl)
         loginWrapper += webview {
             id = "instance-login"
             engine?.load(oAuthUrlBuilder.invoke(oAuthModel))

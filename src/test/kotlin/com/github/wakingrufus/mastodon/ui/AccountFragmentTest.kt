@@ -7,19 +7,19 @@ import org.junit.Test
 import org.testfx.api.FxAssert
 import org.testfx.matcher.base.NodeMatchers
 
+
 class AccountFragmentTest : TornadoFxTest() {
     companion object : KLogging()
 
     @Test
     fun test() {
-        val instance = AccountFragment(
-                server = "server",
-                account = Account(
+        showViewWithParams<AccountFragment>(mapOf(
+                "server" to "server",
+                "account" to Account(
                         id = 1,
                         displayName = "displayName",
-                        userName = "username")
-        )
-        showView(instance)
+                        userName = "username")))
+
         FxAssert.verifyThat("#display-name", NodeMatchers.hasText("displayName"))
     }
 }

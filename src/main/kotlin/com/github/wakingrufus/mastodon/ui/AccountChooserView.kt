@@ -6,11 +6,11 @@ import javafx.collections.ObservableList
 import mu.KLogging
 import tornadofx.*
 
-class AccountChooserView(accountFragment: (String, Account) -> AccountFragment =
-                         { s: String, a: Account -> AccountFragment(server = s, account = a) })
-    : View() {
+class AccountChooserView : View() {
     companion object : KLogging()
 
+    val accountFragment: (String, Account) -> AccountFragment  by param(
+            { s: String, a: Account -> find<AccountFragment>(params = mapOf("server" to s, "account" to a)) })
     val accounts: ObservableList<AccountState> by param()
     var choice: AccountState? = null
 
