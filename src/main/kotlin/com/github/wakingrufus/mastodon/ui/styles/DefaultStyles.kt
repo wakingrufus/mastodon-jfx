@@ -13,6 +13,7 @@ class DefaultStyles : Stylesheet() {
         val textInput by cssclass()
         val defaultBorder by cssclass()
 
+        val backdropColor = c ("#222222")
         val backgroundColor = c("#122e43")
         val darkestBackgroundColor = c("#061018")
         val darkerBackgroundColor = c("#0E2333")
@@ -21,8 +22,8 @@ class DefaultStyles : Stylesheet() {
         private val presetBackgroundColor = c("#061018")
         private val armedBackgroundColor = c("#2b6a9b")
         private val hoverBackgroundColor = c("#122e43")
-        private val textColor = c("#2b6a9b")
-        private val armedTextColor = Color.WHITE
+        val textColor = c("#2b6a9b")
+        val armedTextColor = Color.WHITE
 
     }
 

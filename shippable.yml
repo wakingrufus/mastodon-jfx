@@ -1,7 +1,7 @@
 language: java
 
 jdk:
-    - oraclejdk8
+    - openjdk8
 
 env:
   global:
@@ -9,11 +9,15 @@ env:
     - secure: z9IGw3NJvhMCVNNDR66STZlpHp2gd62cAfJn/oUe0/ozvD1qcPyl3+c+Ypp06Hv3mFIzJUjaeWbTqs5uCuCGAVjB5shHwhFgO42oW1oH9zEBF1bEbSAoYTrVg+fp9Xw1lHkrStaUh2Sg3zF36Lv591BPCtJqaPPCFSkLLi5sI6c400BoD1vrHgKozd8ysutkmEMoebBwmeoBJj78j4NxINWXjpFp8a3ek0b/GPdsDT6A0kNQtxa1zo7k+sD0JtVvgxwRtkWB6JIWiWTiz7TicHWXhQyES3c7kxXQqdCRMU6Koa1lCOvj9/PFgtlO+7YFyJIFlOMarVgIp/QL6h8Erw==
     - secure: dkmc+cm3MJORJsUfg8nceylVgD9Cd6cyiQ+4Rf1SJw3+mLorvBInMlVF96tKbGhPTgAGO4jJZGHoTrC9ygYJF5/t+Z5W2oikt4/FKJtlTj3KIZY7ggpoeJ1u9Oc2OLN1EfuxbByKQNw2yQLbtha5cjufDr39Lgdud8qQv0neNVms9cKELaGB4mcFf6A1PXPniJmcENH+UrlS6EdTgO5TzjzB8jDyyNHoBAmwo4rXNAEZfolJyoULkELGGvzaPMbppR6qse7+VTSlzNh5hORoHPpeImjeNQ7LsC88Cdmn+PXt/ksHhAxUHzIYmZ67SSTI2MuUxvRPNGbyr6fD9neVjg==
 
+before_script:
+    - uname -a
+    - java -version
+
 build:
   ci:
-    - sudo apt-get install xvfb
-    - Xvfb :99 &>/dev/null &
-    - export DISPLAY=:99
+    - sudo apt-get install openjfx
+    - Xvfb +extension RANDR :99 &>/dev/null &
+    - export DISPLAY=:99.0
     - mkdir -p shippable/testresults
     - mkdir -p shippable/codecoverage
     - mkdir -p shippable/codecoverage/target/site/jacoco

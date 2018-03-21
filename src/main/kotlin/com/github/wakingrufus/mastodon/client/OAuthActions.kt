@@ -1,8 +1,8 @@
 package com.github.wakingrufus.mastodon.client
 
-import com.github.wakingrufus.mastodon.account.AccountConfig
 import com.github.wakingrufus.mastodon.account.createAccountConfig
 import com.github.wakingrufus.mastodon.account.createAccountState
+import com.github.wakingrufus.mastodon.config.AccountConfig
 import com.github.wakingrufus.mastodon.config.ConfigurationHandler
 import com.github.wakingrufus.mastodon.config.FileConfigurationHandler
 import com.github.wakingrufus.mastodon.data.AccountState

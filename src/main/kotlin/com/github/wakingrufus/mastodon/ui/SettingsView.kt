@@ -8,22 +8,24 @@ import com.sys1yagi.mastodon4j.api.entity.Account
 import javafx.collections.ObservableList
 import javafx.geometry.Pos
 import javafx.scene.paint.Color
+import javafx.stage.StageStyle
 import mu.KLogging
 import tornadofx.*
 
 class SettingsView(accountFragment: (String, Account) -> AccountFragment =
-                   { s: String, a: Account -> find(params = mapOf("server" to s, "account" to a)) }) : View() {
+                           { s: String, a: Account -> find(params = mapOf("server" to s, "account" to a)) }) : View() {
     companion object : KLogging()
 
     val createAccount: () -> Unit by param()
     val accountStates: ObservableList<AccountState> by param()
     val viewFeed: (StatusFeed) -> Any by param()
     val viewNotifications: (NotificationFeed) -> Any by param()
+    val newToot: () -> Any by param()
     override val root = vbox {
         style {
             minWidth = 30.em
             minHeight = 100.percent
-            backgroundColor = multi(Color.rgb(0x22, 0x22, 0x22))
+            backgroundColor = multi(DefaultStyles.backdropColor)
             padding = CssBox(top = 1.px, right = 1.px, bottom = 1.px, left = 1.px)
         }
         vbox {
@@ -31,7 +33,7 @@ class SettingsView(accountFragment: (String, Account) -> AccountFragment =
                 id = "accountListWrapper"
                 textFill = Color.WHITE
                 minHeight = 100.percent
-                backgroundColor = multi(Color.rgb(0x12, 0x2e, 0x43))
+                backgroundColor = multi(DefaultStyles.backgroundColor)
             }
             children.bind(accountStates) {
                 hbox {
@@ -64,6 +66,15 @@ class SettingsView(accountFragment: (String, Account) -> AccountFragment =
                                 accessibleText = "Notifications"
                                 action {
                                     viewNotifications(it.notificationFeed)
+                                }
+                            }
+                            button("📝") {
+                                addClass(DefaultStyles.smallButton)
+                                accessibleText = "New Toot"
+                                action {
+                                    find<TootEditor>(mapOf("client" to it.client)).apply {
+                                        openModal(stageStyle = StageStyle.UTILITY, block = true)
+                                    }
                                 }
                             }
                         }

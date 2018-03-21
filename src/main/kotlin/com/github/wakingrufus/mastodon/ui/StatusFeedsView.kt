@@ -25,16 +25,13 @@ class StatusFeedsView : View() {
         style {
             minWidth = 100.percent
             minHeight = 100.percent
-            backgroundColor = multi(Color.rgb(0x06, 0x10, 0x18))
+            backgroundColor = multi(DefaultStyles.backdropColor)
             padding = CssBox(top = 1.px, right = 1.px, bottom = 1.px, left = 1.px)
         }
         children.bind(statusFeeds) {
             vbox {
                 style {
-                    backgroundColor = multi(Color.rgb(0x32, 0x8B, 0xDB),
-                            Color.rgb(0x20, 0x7B, 0xCF),
-                            Color.rgb(0x19, 0x73, 0xC9),
-                            Color.rgb(0x0A, 0x65, 0xBF))
+                    backgroundColor = multi(DefaultStyles.backdropColor)
                     textFill = Color.WHITE
                     padding = box(1.px, 1.px, 1.px, 1.px)
                     alignment = Pos.CENTER
@@ -43,7 +40,7 @@ class StatusFeedsView : View() {
                 label(it.name + " @ " + it.server) {
                     textFill = Color.WHITE
                     style {
-                        backgroundColor = multi(DefaultStyles.backgroundColor)
+                        backgroundColor = multi(DefaultStyles.backdropColor)
                         padding = CssBox(1.px, 1.px, 1.px, 1.px)
                         fontSize = 2.5.em
                     }
@@ -51,7 +48,7 @@ class StatusFeedsView : View() {
                 scrollpane {
                     hbarPolicy = ScrollPane.ScrollBarPolicy.NEVER
                     vbox {
-                        children.bind(it.statuses) {
+                        children.bind(it.statuses) { status ->
                             vbox {
                                 addClass(DefaultStyles.defaultBorder)
                                 style {
@@ -60,8 +57,10 @@ class StatusFeedsView : View() {
                                     backgroundColor = multi(DefaultStyles.backgroundColor)
                                     textFill = Color.WHITE
                                 }
-                                this += find<AccountFragment>(mapOf("account" to it.account!!, "server" to parseUrlFunc(it.uri)))
-                                val toot = parseToot(it.content)
+                                this += find<AccountFragment>(mapOf(
+                                        "account" to status.account!!,
+                                        "server" to parseUrlFunc(status.uri)))
+                                val toot = parseToot(status.content)
                                 toot.style {
                                     backgroundColor = multi(DefaultStyles.backgroundColor)
                                     textFill = Color.WHITE
@@ -70,14 +69,6 @@ class StatusFeedsView : View() {
                                 hbox {
                                     button("↰") {
                                         addClass(DefaultStyles.smallButton)
-                                    }
-                                    button("☆") {
-                                        if (it.isFavourited) text = "★"
-                                        addClass(DefaultStyles.smallButton)
-                                    }
-                                    button("♲") {
-                                        addClass(DefaultStyles.smallButton)
-                                        if (it.isReblogged) text = "♻"
                                         action {
                                             val modal: AccountChooserView =
                                                     find<AccountChooserView>(mapOf("accounts" to accounts)).apply {
@@ -88,12 +79,38 @@ class StatusFeedsView : View() {
                                             val account = modal.getAccount()
                                             logger.info { "account chosen: $account" }
                                             if (account != null) {
-                                                if (it.isReblogged) {
+                                                find<TootEditor>(mapOf(
+                                                        "client" to account.client,
+                                                        "inReplyTo" to status)).apply {
+                                                    openModal(stageStyle = StageStyle.UTILITY, block = true)
+                                                }
+                                            }
+
+                                        }
+                                    }
+                                    button("☆") {
+                                        if (status.isFavourited) text = "★"
+                                        addClass(DefaultStyles.smallButton)
+                                    }
+                                    button("♲") {
+                                        addClass(DefaultStyles.smallButton)
+                                        if (status.isReblogged) text = "♻"
+                                        action {
+                                            val modal: AccountChooserView =
+                                                    find<AccountChooserView>(mapOf("accounts" to accounts)).apply {
+                                                        openModal(
+                                                                stageStyle = StageStyle.UTILITY,
+                                                                block = true)
+                                                    }
+                                            val account = modal.getAccount()
+                                            logger.info { "account chosen: $account" }
+                                            if (account != null) {
+                                                if (status.isReblogged) {
                                                     this.text = "♲"
-                                                    unboostToot(id = it.id, client = account.client)
+                                                    unboostToot(id = status.id, client = account.client)
                                                 } else {
                                                     this.text = "♻"
-                                                    boostToot(id = it.id, client = account.client)
+                                                    boostToot(id = status.id, client = account.client)
                                                 }
                                             }
                                         }
