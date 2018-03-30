@@ -1,6 +1,5 @@
 package com.github.wakingrufus.mastodon.config
 
-import com.github.wakingrufus.mastodon.account.AccountConfig
 import mu.KLogging
 import org.junit.Assert.assertEquals
 import org.junit.Test

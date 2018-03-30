@@ -1,4 +1,4 @@
-package com.github.wakingrufus.mastodon.account
+package com.github.wakingrufus.mastodon.config
 
 data class AccountConfig(val accessToken: String,
                          val clientId: String,

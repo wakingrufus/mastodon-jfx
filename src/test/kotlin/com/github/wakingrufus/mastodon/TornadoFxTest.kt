@@ -4,10 +4,7 @@ import javafx.application.Platform
 import javafx.scene.Scene
 import javafx.stage.Stage
 import org.testfx.framework.junit.ApplicationTest
-import tornadofx.UIComponent
-import tornadofx.View
-import tornadofx.clear
-import tornadofx.stackpane
+import tornadofx.*
 import java.time.Instant
 
 open class TornadoFxTest : ApplicationTest() {
@@ -24,11 +21,12 @@ open class TornadoFxTest : ApplicationTest() {
     class TestView : View() {
         override val root = stackpane { }
         inline fun <reified T : UIComponent> findView(params: Map<*, Any?>?) = find<T>(params)
-        inline fun <reified T : UIComponent> addViewWithParams(params: Map<*, Any?>?) {
+        inline fun <reified T : UIComponent> addViewWithParams(params: Map<*, Any?>?): T {
             Platform.runLater {
                 root.add(findView<T>(params))
             }
             waitFor(condition = { root.children.size > 0 })
+            return root.children[0].uiComponent()!!
         }
     }
 }

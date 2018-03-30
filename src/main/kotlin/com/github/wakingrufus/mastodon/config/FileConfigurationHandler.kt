@@ -3,7 +3,6 @@ package com.github.wakingrufus.mastodon.config
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import com.fasterxml.jackson.module.paramnames.ParameterNamesModule
-import com.github.wakingrufus.mastodon.account.AccountConfig
 import mu.KLogging
 import java.io.File
 import java.io.IOException
