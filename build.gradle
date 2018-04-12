@@ -21,7 +21,7 @@ repositories {
     maven { url 'https://jitpack.io' }
 }
 
-version = "0.7.1"
+version = "0.8.0"
 
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre8"
@@ -39,6 +39,7 @@ dependencies {
     compile "org.jetbrains.kotlin:kotlin-reflect"
     compile "org.jsoup:jsoup:1.10.3"
     compile 'no.tornado:tornadofx:1.7.11'
+    compile "org.controlsfx:controlsfx:8.40.14"
 
     testCompile "org.jetbrains.kotlin:kotlin-test"
     testCompile "org.jetbrains.kotlin:kotlin-test-junit"

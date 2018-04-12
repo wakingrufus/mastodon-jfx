@@ -9,6 +9,7 @@ import com.github.wakingrufus.mastodon.data.AccountState
 import com.github.wakingrufus.mastodon.data.OAuthModel
 import com.sys1yagi.mastodon4j.MastodonClient
 import com.sys1yagi.mastodon4j.api.Scope
+import com.sys1yagi.mastodon4j.api.entity.Notification
 import com.sys1yagi.mastodon4j.api.entity.auth.AccessToken
 import com.sys1yagi.mastodon4j.api.method.Accounts
 import com.sys1yagi.mastodon4j.api.method.Apps
@@ -26,13 +27,13 @@ fun getOAuthUrl(oauthModel: OAuthModel): String {
 fun completeOAuth(oAuth: OAuthModel,
                   onComplete: (AccountState) -> Unit,
                   configHandler: ConfigurationHandler = FileConfigurationHandler(),
-                  accountStateCreator: (MastodonClient) -> AccountState = ::createAccountState,
+                  accountStateCreator: (MastodonClient, (Notification) -> Unit) -> AccountState = ::createAccountState,
                   accountConfigCreator: (Accounts, String, String, String, String) -> AccountConfig = ::createAccountConfig,
                   accessTokenBuilder: (OAuthModel) -> AccessToken = ::getAccessToken,
                   accountClientCreator: (String, String) -> MastodonClient = ::createAccountClient) {
     val accessToken = accessTokenBuilder.invoke(oAuth)
     val accountClient = accountClientCreator.invoke(oAuth.client.getInstanceName(), accessToken.accessToken)
-    val accountState = accountStateCreator.invoke(accountClient)
+    val accountState = accountStateCreator.invoke(accountClient, {System.out.println(it.toString())})
     configHandler.saveConfig(configHandler.addAccountToConfig(
             configHandler.readFileConfig(),
             accountConfigCreator.invoke(
