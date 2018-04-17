@@ -9,9 +9,8 @@ import com.github.wakingrufus.mastodon.data.NotificationFeed
 import com.github.wakingrufus.mastodon.data.StatusFeed
 import javafx.collections.FXCollections
 import mu.KLogging
-import tornadofx.View
-import tornadofx.borderpane
-import tornadofx.percent
+import org.controlsfx.control.Notifications
+import tornadofx.*
 import java.io.File
 
 class MainView : View() {
@@ -28,7 +27,6 @@ class MainView : View() {
             "statusFeeds" to statusFeeds,
             "accounts" to accountStates))
 
-    val controller: MainController by inject()
     val configHandler: ConfigurationHandler =
             FileConfigurationHandler(File(File(System.getProperty("user.home")), ".mastodon.txt"))
 
@@ -57,10 +55,16 @@ class MainView : View() {
     }
 
     init {
-        controller.readConfig()
+        //   controller.readConfig()
         configHandler.readFileConfig().identities.forEach { (accessToken, _, _, _, server) ->
             val client = createAccountClient(server, accessToken)
-            accountStates.add(createAccountState(client))
+            accountStates.add(createAccountState(client = client, onNotification = {
+                Notifications.create()
+                    //    .text(it.type)
+                        .graphic(find<NotificationFragment>(params = mapOf("notification" to it, "server" to server)).root)
+                        .darkStyle()
+                        .show()
+            }))
         }
     }
 
