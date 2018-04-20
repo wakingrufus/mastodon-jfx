@@ -15,6 +15,7 @@ before_script:
 
 build:
   ci:
+    - sudo apt update
     - sudo apt-get install openjfx
     - Xvfb +extension RANDR :99 &>/dev/null &
     - export DISPLAY=:99.0
